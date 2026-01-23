@@ -98,49 +98,49 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WORK-01 | TBD | Pending |
-| WORK-02 | TBD | Pending |
-| WORK-03 | TBD | Pending |
-| WORK-04 | TBD | Pending |
-| WORK-05 | TBD | Pending |
-| WORK-06 | TBD | Pending |
-| WORK-07 | TBD | Pending |
-| WORK-08 | TBD | Pending |
-| WORK-09 | TBD | Pending |
-| WORK-10 | TBD | Pending |
-| WORK-11 | TBD | Pending |
-| WORK-12 | TBD | Pending |
-| WORK-13 | TBD | Pending |
-| AGENT-01 | TBD | Pending |
-| AGENT-02 | TBD | Pending |
-| AGENT-03 | TBD | Pending |
-| AGENT-04 | TBD | Pending |
-| AGENT-05 | TBD | Pending |
-| AGENT-06 | TBD | Pending |
-| AGENT-07 | TBD | Pending |
-| AGENT-08 | TBD | Pending |
-| AGENT-09 | TBD | Pending |
-| INFRA-01 | TBD | Pending |
-| INFRA-02 | TBD | Pending |
-| INFRA-03 | TBD | Pending |
-| INFRA-04 | TBD | Pending |
-| INFRA-05 | TBD | Pending |
-| INFRA-06 | TBD | Pending |
-| INFRA-07 | TBD | Pending |
-| INFRA-08 | TBD | Pending |
-| CONTEXT-01 | TBD | Pending |
-| CONTEXT-02 | TBD | Pending |
-| CONTEXT-03 | TBD | Pending |
-| CONTEXT-04 | TBD | Pending |
-| CONTEXT-05 | TBD | Pending |
-| CONTEXT-06 | TBD | Pending |
-| CONTEXT-07 | TBD | Pending |
+| WORK-01 | Phase 1 | Pending |
+| WORK-02 | Phase 5 | Pending |
+| WORK-03 | Phase 2 | Pending |
+| WORK-04 | Phase 3 | Pending |
+| WORK-05 | Phase 4 | Pending |
+| WORK-06 | Phase 5 | Pending |
+| WORK-07 | Phase 5 | Pending |
+| WORK-08 | Phase 4 | Pending |
+| WORK-09 | Phase 1 | Pending |
+| WORK-10 | Phase 5 | Pending |
+| WORK-11 | Phase 5 | Pending |
+| WORK-12 | Phase 5 | Pending |
+| WORK-13 | Phase 5 | Pending |
+| AGENT-01 | Phase 2 | Pending |
+| AGENT-02 | Phase 2 | Pending |
+| AGENT-03 | Phase 3 | Pending |
+| AGENT-04 | Phase 4 | Pending |
+| AGENT-05 | Phase 4 | Pending |
+| AGENT-06 | Phase 2 | Pending |
+| AGENT-07 | Phase 3 | Pending |
+| AGENT-08 | Phase 2 | Pending |
+| AGENT-09 | Phase 3 | Pending |
+| INFRA-01 | Phase 2 | Pending |
+| INFRA-02 | Phase 2 | Pending |
+| INFRA-03 | Phase 3 | Pending |
+| INFRA-04 | Phase 1 | Pending |
+| INFRA-05 | Phase 1 | Pending |
+| INFRA-06 | Phase 4 | Pending |
+| INFRA-07 | Phase 4 | Pending |
+| INFRA-08 | Phase 4 | Pending |
+| CONTEXT-01 | Phase 2 | Pending |
+| CONTEXT-02 | Phase 2 | Pending |
+| CONTEXT-03 | Phase 3 | Pending |
+| CONTEXT-04 | Phase 4 | Pending |
+| CONTEXT-05 | Phase 1 | Pending |
+| CONTEXT-06 | Phase 2 | Pending |
+| CONTEXT-07 | Phase 2 | Pending |
 
 **Coverage:**
-- v1 requirements: 36 total
-- Mapped to phases: 0 (pending roadmap creation)
-- Unmapped: 36 ⚠️
+- v1 requirements: 37 total
+- Mapped to phases: 37 (100% coverage)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-01-23*
-*Last updated: 2026-01-23 after initial definition*
+*Last updated: 2026-01-23 after roadmap creation*
