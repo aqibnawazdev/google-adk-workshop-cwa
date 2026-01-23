@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 ## Current Position
 
 Phase: 1 of 5 (Foundation & Setup)
-Plan: 2 of 4 complete (01-01, 01-03)
+Plan: 3 of 4 complete (01-01, 01-02, 01-03)
 Status: In progress
-Last activity: 2026-01-23 - Completed 01-01-PLAN.md
+Last activity: 2026-01-23 - Completed 01-02-PLAN.md
 
-Progress: [█████░░░░░] 50%
+Progress: [███████░░░] 75%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 3min
-- Total execution time: 0.1 hours
+- Total plans completed: 3
+- Average duration: 3.3min
+- Total execution time: 0.17 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 (Foundation & Setup) | 2 | 6min | 3min |
+| 1 (Foundation & Setup) | 3 | 10min | 3.3min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (2min), 01-01 (4min)
+- Last 5 plans: 01-03 (2min), 01-01 (4min), 01-02 (4min)
 - Trend: Consistent velocity
 
 *Updated after each plan completion*
@@ -47,6 +47,9 @@ Recent decisions affecting current work:
 - 01-01: Colab-only approach eliminates local environment setup (saves 30-40 minutes)
 - 01-01: 48-hour pre-validation requirement catches auth/API issues before workshop
 - 01-01: Specific troubleshooting per error type (ImportError, CalledProcessError, TimeoutError)
+- 01-02: 14-cell notebook structure with timing estimates - supports workshop pacing and instructor facilitation
+- 01-02: HTML comment instructor notes - keeps participant view clean while providing facilitation guidance
+- 01-02: Embedded troubleshooting in checkpoints - reduces context switching during workshop
 - 01-03: Mock data in tool functions - keeps reference simple, focuses on ADK patterns
 - 01-03: Exercise labels in code comments - creates clear learning roadmap
 - 01-03: Context engineering in instruction - demonstrates proper prompt engineering pattern
@@ -67,6 +70,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-23T22:43:31Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-01-23T22:42:46Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
