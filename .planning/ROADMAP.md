@@ -29,10 +29,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Participant can run basic conversational agent with Gemini 2.5 Flash in Google Colab or local environment
   3. Participant can examine reference implementation to understand target architecture
   4. Environment verification script confirms all dependencies and API access work correctly
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 01-01: TBD during phase planning
+- [ ] 01-01-PLAN.md — Environment verification notebook (00-setup-verification.ipynb)
+- [ ] 01-02-PLAN.md — Basic hello agent notebook (01-hello-agent.ipynb)
+- [ ] 01-03-PLAN.md — Reference implementation (agent.py, README, .env.template)
+- [ ] 01-04-PLAN.md — Setup documentation (SETUP.md, workshop README.md)
 
 ### Phase 2: Function Calling & Tools
 **Goal**: Agent can search real-time booking data using function calling for flights and hotels
@@ -104,7 +107,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Setup | 0/TBD | Not started | - |
+| 1. Foundation & Setup | 0/4 | Planned | - |
 | 2. Function Calling & Tools | 0/TBD | Not started | - |
 | 3. RAG & Knowledge Integration | 0/TBD | Not started | - |
 | 4. Sessions & Deployment | 0/TBD | Not started | - |
