@@ -44,6 +44,9 @@ Recent decisions affecting current work:
 
 - Roadmap creation: 5-phase progressive workshop structure derived from requirements (setup → function calling → RAG → sessions → support materials)
 - Coverage validation: All 37 v1 requirements mapped to phases with no orphans
+- Phase 1 execution: Colab-first approach with 48-hour pre-validation pattern established
+- Educational structure: TODO-guided hands-on coding with instructor notes and checkpoints
+- Reference implementation: Exercise-labeled code sections showing progressive architecture
 - 01-01: Colab-only approach eliminates local environment setup (saves 30-40 minutes)
 - 01-01: 48-hour pre-validation requirement catches auth/API issues before workshop
 - 01-01: Specific troubleshooting per error type (ImportError, CalledProcessError, TimeoutError)

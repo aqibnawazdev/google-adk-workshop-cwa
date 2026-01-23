@@ -98,7 +98,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WORK-01 | Phase 1 | Pending |
+| WORK-01 | Phase 1 | Complete |
 | WORK-02 | Phase 5 | Pending |
 | WORK-03 | Phase 2 | Pending |
 | WORK-04 | Phase 3 | Pending |
@@ -106,7 +106,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | WORK-06 | Phase 5 | Pending |
 | WORK-07 | Phase 5 | Pending |
 | WORK-08 | Phase 4 | Pending |
-| WORK-09 | Phase 1 | Pending |
+| WORK-09 | Phase 1 | Complete |
 | WORK-10 | Phase 5 | Pending |
 | WORK-11 | Phase 5 | Pending |
 | WORK-12 | Phase 5 | Pending |
@@ -123,8 +123,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INFRA-01 | Phase 2 | Pending |
 | INFRA-02 | Phase 2 | Pending |
 | INFRA-03 | Phase 3 | Pending |
-| INFRA-04 | Phase 1 | Pending |
-| INFRA-05 | Phase 1 | Pending |
+| INFRA-04 | Phase 1 | Complete |
+| INFRA-05 | Phase 1 | Complete |
 | INFRA-06 | Phase 4 | Pending |
 | INFRA-07 | Phase 4 | Pending |
 | INFRA-08 | Phase 4 | Pending |
@@ -132,7 +132,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONTEXT-02 | Phase 2 | Pending |
 | CONTEXT-03 | Phase 3 | Pending |
 | CONTEXT-04 | Phase 4 | Pending |
-| CONTEXT-05 | Phase 1 | Pending |
+| CONTEXT-05 | Phase 1 | Complete |
 | CONTEXT-06 | Phase 2 | Pending |
 | CONTEXT-07 | Phase 2 | Pending |
 

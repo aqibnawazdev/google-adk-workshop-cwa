@@ -12,7 +12,7 @@ This roadmap delivers a complete 90-minute hands-on workshop teaching AI agent d
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & Setup** - Environment setup, basic agent, and reference implementation
+- [x] **Phase 1: Foundation & Setup** - Environment setup, basic agent, and reference implementation
 - [ ] **Phase 2: Function Calling & Tools** - Real-time booking search with flight/hotel APIs
 - [ ] **Phase 3: RAG & Knowledge Integration** - Destination knowledge retrieval and recommendations
 - [ ] **Phase 4: Sessions & Deployment** - State management, conversation persistence, and Vertex AI deployment
@@ -107,7 +107,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Setup | 0/4 | Planned | - |
+| 1. Foundation & Setup | 4/4 | Complete | 2026-01-23 |
 | 2. Function Calling & Tools | 0/TBD | Not started | - |
 | 3. RAG & Knowledge Integration | 0/TBD | Not started | - |
 | 4. Sessions & Deployment | 0/TBD | Not started | - |
