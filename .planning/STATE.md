@@ -113,6 +113,9 @@ Recent decisions affecting current work:
 - 05-05: Screenshot + email confirmation creates accountability for pre-workshop readiness
 - 05-05: 24-hour instructor response window balances promptness with practicality
 - 05-05: Tracking table template enables instructor to monitor confirmation status
+- 05-02: ASCII flowchart for context engineering decisions - works in all markdown renderers
+- 05-02: Quick Reference Card format - printable summary for development use
+- 05-02: 5 common mistakes with corrections - prevents architectural errors
 
 ### Pending Todos
 
@@ -130,6 +133,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-24T19:34:42Z
-Stopped at: Completed 05-05-PLAN.md (Pre-Workshop Confirmation Mechanism)
+Last session: 2026-01-24T19:35:02Z
+Stopped at: Completed 05-02-PLAN.md (Context Engineering Decision Framework)
 Resume file: None
