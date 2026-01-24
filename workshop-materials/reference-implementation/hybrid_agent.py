@@ -26,6 +26,12 @@ from google.genai.types import Content, Part
 
 from tools import search_flights, search_hotels
 from rag_tools import create_destination_knowledge_tool
+from state_utils import (
+    remember_preference,
+    get_preference,
+    get_preference_injection_block,
+    get_budget_from_state,
+)
 
 
 # ============================================================
@@ -42,31 +48,39 @@ RAG_CORPUS_ID = os.environ.get('RAG_CORPUS_ID')
 
 def create_booking_agent() -> Agent:
     """
-    Create agent for real-time booking searches.
-    Uses function calling tools (flights, hotels).
+    Create agent for real-time booking searches with preference awareness.
+    Uses function calling tools (flights, hotels) and preference tools.
     """
+    # Get preference injection block for state-aware instruction
+    preference_block = get_preference_injection_block()
+
     return Agent(
         model=MODEL,
         name='booking_agent',
-        description='Search for flights and hotels with real-time availability.',
+        description='Search for flights and hotels with real-time availability and preference awareness.',
 
-        instruction='''You search for travel bookings using real-time data.
+        instruction=f'''You search for travel bookings using real-time data.
+
+{preference_block}
 
 YOUR CAPABILITIES:
 - Search for flights between airports worldwide
 - Search for hotels in any destination
 - Filter by dates, passengers/guests, and budget
+- Remember and apply user preferences automatically
 
 HOW TO HELP:
 1. Use search_flights() for flight queries
 2. Use search_hotels() for accommodation queries
-3. Apply max_price/max_price_per_night when budget mentioned
-4. Present 2-3 best options with clear pricing
+3. Apply saved budget automatically (from preferences above)
+4. If no budget set, ask when showing prices
+5. Present 2-3 best options with clear pricing
+6. Use remember_preference() when user mentions a budget or preference
 
 You CANNOT provide destination information (visa, culture, weather).
 For that, users should ask the destination expert.''',
 
-        tools=[search_flights, search_hotels],
+        tools=[search_flights, search_hotels, remember_preference, get_preference],
     )
 
 
@@ -227,10 +241,16 @@ class HybridTravelAssistant:
                 tip_query = f"What are the top 3 tips for visiting {destination}?"
                 tips = await self._run_agent(self.destination_agent, tip_query)
 
-                return (
+                booking_response = (
                     f"{booking_response}\n\n"
                     f"**{destination} Travel Tips:**\n{tips}"
                 )
+
+            # After booking response, offer to save preferences if budget mentioned
+            query_lower = user_query.lower()
+            if "budget" in query_lower or "$" in user_query or "under" in query_lower:
+                if "remember" not in booking_response.lower() and "saved" not in booking_response.lower():
+                    booking_response += "\n\n_Tip: I can remember your budget for future searches. Just say 'remember my budget is $X'._"
 
             return booking_response
 
