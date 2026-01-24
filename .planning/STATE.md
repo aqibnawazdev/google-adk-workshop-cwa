@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 ## Current Position
 
 Phase: 2 of 5 (Function Calling & Tools)
-Plan: 2 of 4 complete (02-01, 02-02)
+Plan: 2 of 3 complete (02-01, 02-02)
 Status: In progress
 Last activity: 2026-01-24 - Completed 02-02-PLAN.md
 
-Progress: [███░░░░░░░] 30%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 6
-- Average duration: 2.7min
-- Total execution time: 0.27 hours
+- Average duration: 2.8min
+- Total execution time: 0.28 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1 (Foundation & Setup) | 4 | 12min | 3.0min |
-| 2 (Function Calling & Tools) | 2 | 4min | 2.0min |
+| 2 (Function Calling & Tools) | 2 | 6min | 3.0min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (2min), 02-01 (2min), 01-04 (2min), 01-03 (2min), 01-02 (4min)
+- Last 5 plans: 02-01 (4min), 02-02 (2min), 01-04 (2min), 01-03 (2min), 01-02 (4min)
 - Trend: Excellent velocity, Phase 2 in progress
 
 *Updated after each plan completion*
@@ -60,6 +60,10 @@ Recent decisions affecting current work:
 - 01-04: Colab as primary path with local as advanced option - reduces setup complexity for 90% of participants
 - 01-04: Comprehensive troubleshooting section - addresses auth, dependencies, network, and model access issues
 - 01-04: Context engineering explanation in README - makes workshop learning objectives explicit
+- 02-01: Mock APIs over real travel APIs - eliminates costs, rate limits, API key management while keeping focus on ADK patterns
+- 02-01: Tools vs RAG decision framework upfront - THE key insight participants need before building
+- 02-01: Error-in-context pattern demonstrated explicitly - critical for LLM-based error recovery
+- 02-01: Debug output in tool functions - makes LLM tool invocation visible to learners
 - 02-02: Error-in-context pattern - tools return error dicts instead of raising exceptions for better LLM reasoning
 - 02-02: Budget filtering parameters - max_price and max_price_per_night enable budget-aware travel planning
 - 02-02: Modular tool architecture - tools.py separate from agent.py for production code organization
@@ -80,6 +84,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-24T06:42:05Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-01-24T05:19:23Z
+Stopped at: Completed 02-01-PLAN.md
 Resume file: None
