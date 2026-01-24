@@ -21,7 +21,7 @@ from tools import search_flights, search_hotels
 # ============================================================
 
 PROJECT_ID = os.environ.get('GOOGLE_CLOUD_PROJECT', 'your-project-id')
-LOCATION = os.environ.get('GOOGLE_CLOUD_LOCATION', 'us-central1')
+LOCATION = os.environ.get('GOOGLE_CLOUD_LOCATION', 'europe-west1')
 MODEL = 'gemini-2.5-flash'
 
 # ============================================================

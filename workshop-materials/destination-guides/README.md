@@ -147,7 +147,7 @@ python scripts/validate-corpus.py
 Or with explicit corpus ID:
 
 ```bash
-python scripts/validate-corpus.py projects/your-project/locations/us-central1/ragCorpora/123456
+python scripts/validate-corpus.py projects/your-project/locations/europe-west1/ragCorpora/123456
 ```
 
 This tests:
@@ -168,7 +168,7 @@ Add the corpus ID to:
 Example:
 ```python
 # Exercise 3 notebook
-RAG_CORPUS_ID = "projects/adk-workshop-2026/locations/us-central1/ragCorpora/1234567890"
+RAG_CORPUS_ID = "projects/adk-workshop-2026/locations/europe-west1/ragCorpora/1234567890"
 ```
 
 ### Corpus Configuration Details
@@ -192,7 +192,7 @@ The corpus is configured with:
   - Optimized for semantic search
 
 - **Indexing time**: 5-10 minutes for 10 PDFs
-  - Check status: `gcloud ai rag-corpora describe <corpus-id> --location=us-central1`
+  - Check status: `gcloud ai rag-corpora describe <corpus-id> --location=europe-west1`
 
 ### Troubleshooting
 

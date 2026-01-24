@@ -33,7 +33,7 @@ set -o pipefail  # Catch errors in pipelines
 # ============================================================================
 
 PROJECT_ID="${1:-$GOOGLE_CLOUD_PROJECT}"
-LOCATION="${2:-us-central1}"
+LOCATION="${2:-europe-west1}"
 BUCKET_NAME="${PROJECT_ID}-adk-workshop-rag"
 CORPUS_NAME="travel-destination-guides"
 
