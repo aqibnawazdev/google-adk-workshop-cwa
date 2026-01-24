@@ -271,6 +271,29 @@ echo "   ✓ Corpus created"
 echo "   Corpus ID: $CORPUS_ID"
 echo "   Full path: $FULL_CORPUS_ID"
 
+# Wait for corpus to be ready (async creation)
+echo "   Waiting for corpus to be ready..."
+MAX_WAIT=60
+WAITED=0
+while [ $WAITED -lt $MAX_WAIT ]; do
+    CORPUS_STATUS=$(curl -s -X GET \
+      -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+      "https://${LOCATION}-aiplatform.googleapis.com/v1beta1/${FULL_CORPUS_ID}")
+
+    if echo "$CORPUS_STATUS" | jq -e '.name' >/dev/null 2>&1; then
+        echo "   ✓ Corpus is ready"
+        break
+    fi
+
+    sleep 5
+    WAITED=$((WAITED + 5))
+    echo "   Still waiting... (${WAITED}s)"
+done
+
+if [ $WAITED -ge $MAX_WAIT ]; then
+    echo "   ⚠ Warning: Corpus may not be fully ready, proceeding anyway..."
+fi
+
 # ============================================================================
 # STEP 7: IMPORT PDFs TO CORPUS
 # ============================================================================
