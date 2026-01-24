@@ -71,10 +71,16 @@ command -v jq >/dev/null 2>&1 || {
     exit 1
 }
 
-command -v gsutil >/dev/null 2>&1 || {
-    echo "❌ Error: gsutil not found (should come with gcloud)"
+# Check for gcloud storage (modern) or gsutil (legacy)
+if gcloud storage --help >/dev/null 2>&1; then
+    USE_GCLOUD_STORAGE=true
+elif command -v gsutil >/dev/null 2>&1; then
+    USE_GCLOUD_STORAGE=false
+else
+    echo "❌ Error: Neither 'gcloud storage' nor 'gsutil' found"
+    echo "Update gcloud: gcloud components update"
     exit 1
-}
+fi
 
 # ============================================================================
 # HEADER
@@ -154,13 +160,23 @@ find "$GUIDES_DIR" -name "*.pdf" -type f -exec basename {} \; | sed 's/^/     - 
 echo ""
 echo "[3/7] Creating GCS bucket..."
 
-# Check if bucket exists
-if gsutil ls -p "$PROJECT_ID" "gs://$BUCKET_NAME" >/dev/null 2>&1; then
-    echo "   ✓ Bucket already exists: gs://$BUCKET_NAME"
+# Check if bucket exists and create if needed
+if [ "$USE_GCLOUD_STORAGE" = true ]; then
+    if gcloud storage ls "gs://$BUCKET_NAME" --project="$PROJECT_ID" >/dev/null 2>&1; then
+        echo "   ✓ Bucket already exists: gs://$BUCKET_NAME"
+    else
+        echo "   Creating bucket: gs://$BUCKET_NAME"
+        gcloud storage buckets create "gs://$BUCKET_NAME" --project="$PROJECT_ID" --location="$LOCATION"
+        echo "   ✓ Bucket created"
+    fi
 else
-    echo "   Creating bucket: gs://$BUCKET_NAME"
-    gsutil mb -p "$PROJECT_ID" -l "$LOCATION" "gs://$BUCKET_NAME/"
-    echo "   ✓ Bucket created"
+    if gsutil ls -p "$PROJECT_ID" "gs://$BUCKET_NAME" >/dev/null 2>&1; then
+        echo "   ✓ Bucket already exists: gs://$BUCKET_NAME"
+    else
+        echo "   Creating bucket: gs://$BUCKET_NAME"
+        gsutil mb -p "$PROJECT_ID" -l "$LOCATION" "gs://$BUCKET_NAME/"
+        echo "   ✓ Bucket created"
+    fi
 fi
 
 # ============================================================================
@@ -171,7 +187,11 @@ echo ""
 echo "[4/7] Uploading PDFs to GCS..."
 
 # Upload all PDFs with progress
-gsutil -m cp "$GUIDES_DIR"/*.pdf "gs://$BUCKET_NAME/guides/"
+if [ "$USE_GCLOUD_STORAGE" = true ]; then
+    gcloud storage cp "$GUIDES_DIR"/*.pdf "gs://$BUCKET_NAME/guides/"
+else
+    gsutil -m cp "$GUIDES_DIR"/*.pdf "gs://$BUCKET_NAME/guides/"
+fi
 
 echo "   ✓ Uploaded $PDF_COUNT PDF files to gs://$BUCKET_NAME/guides/"
 
