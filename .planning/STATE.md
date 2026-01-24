@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 ## Current Position
 
 Phase: 3 of 5 (RAG & Knowledge Integration)
-Plan: 2 of 6 (03-01, 03-02 complete)
-Status: In progress - destination guide corpus complete (10 guides total), all notebook blocking issues resolved
-Last activity: 2026-01-24 - Fixed ADK API pattern: use Runner + genai.configure() (not agent.generate_content which doesn't exist)
+Plan: 4 of 6 (03-01, 03-02, 03-04 complete)
+Status: In progress - RAG integration reference implementation complete
+Last activity: 2026-01-24 - Completed 03-04: RAG tools module, hybrid agent coordination pattern, main agent RAG integration
 
-Progress: [████████░░] 85%
+Progress: [████████░░] 87%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
-- Average duration: 3.3min
-- Total execution time: 0.50 hours
+- Total plans completed: 10
+- Average duration: 4.0min
+- Total execution time: 0.67 hours
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [████████░░] 85%
 |-------|-------|-------|----------|
 | 1 (Foundation & Setup) | 4 | 12min | 3.0min |
 | 2 (Function Calling & Tools) | 3 | 8min | 2.7min |
-| 3 (RAG & Knowledge Integration) | 2 | 30min | 15.0min |
+| 3 (RAG & Knowledge Integration) | 3 | 40min | 13.3min |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (16min), 03-02 (14min), 02-03 (1.5min), 02-02 (2min), 02-01 (4min)
-- Trend: Phase 3 content creation slower (expected for detailed guide writing), excellent quality output
+- Last 5 plans: 03-04 (10min), 03-01 (16min), 03-02 (14min), 02-03 (1.5min), 02-02 (2min)
+- Trend: Phase 3 content creation time decreasing (03-04: 10min vs 03-01/02: 14-16min), reference implementation faster than content writing
 
 *Updated after each plan completion*
 
@@ -83,6 +83,9 @@ Recent decisions affecting current work:
 - ASYNC FIX: Top-level await instead of asyncio.run() - Colab/Jupyter has existing event loop, asyncio.run() causes nested loop conflict
 - **AUTH DECISION: Switched from Vertex AI to Google AI API key approach** - Simpler participant experience (just get API key from aistudio.google.com/apikey), no GCP project config needed, eliminates vertexai.init() complexity. Vertex AI remains available for deployment topics if covered later.
 - **ADK API PATTERN: Use Runner + InMemorySessionService pattern (not agent.generate_content)** - Based on official docs and ADK_Learning_tools.ipynb example. The correct pattern is: genai.configure(api_key), Runner with InMemorySessionService, runner.run_async() with async for loop, event.is_final_response() to extract response. agent.generate_content() does not exist in ADK.
+- 03-04: Sequential agent coordination pattern - ADK constraint prevents mixing VertexAiRagRetrieval with function tools, workaround uses separate specialized agents with routing logic
+- 03-04: Explicit DO/DO NOT tool descriptions - prevents LLM from calling RAG for real-time queries or tools for static knowledge (Pattern 3 from research)
+- 03-04: Graceful degradation for missing RAG_CORPUS_ID - all modules work before Exercise 3, error messages guide setup
 
 ### Pending Todos
 
@@ -100,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-24T07:23:19Z
-Stopped at: Completed 03-01-PLAN.md (Tokyo, Paris, New York, Singapore, London guides)
+Last session: 2026-01-24T10:17:55Z
+Stopped at: Completed 03-04-PLAN.md (RAG tools module, hybrid agent, main agent RAG integration)
 Resume file: None
