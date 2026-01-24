@@ -8,39 +8,69 @@ A comprehensive 90-minute hands-on workshop teaching Google Agent Development Ki
 
 Participants learn to build production-ready AI agents with proper context engineering - specifically how to combine real-time APIs with structured data and knowledge bases to create intelligent, stateful booking assistants that can search hotels/flights, remember user preferences, and provide expert travel guidance.
 
+## Current State
+
+**Status:** v1.0 Shipped (2026-01-24)
+
+Complete 90-minute workshop with 4 progressive exercises, reference implementation, and comprehensive support materials.
+
+For milestone history, see: `.planning/MILESTONES.md`
+
 ## Requirements
 
-### Validated
+### Validated (v1.0)
 
-(None yet — ship to validate)
+**Workshop Materials (13):**
+- [x] Step-by-step tutorial documentation with clear explanations for AI beginners
+- [x] Starter code project (boilerplate) participants build upon
+- [x] Complete reference implementation demonstrating all concepts
+- [x] 4 progressive exercises building from simple to complete agent
+- [x] Exercise solutions with detailed three-layer explanations
+- [x] GCP and ADK setup instructions for pre-provisioned accounts
+- [x] Troubleshooting guide with symptom-based navigation
+- [x] Deployment guide for Vertex AI Agent Engine
+- [x] Context engineering decision framework
+- [x] Production readiness checklist
+- [x] Pre-workshop validation system (48-hour ahead)
+- [x] Git checkpoint branches for catch-up
+
+**Core ADK Concepts (4):**
+- [x] Function calling/tools - booking search APIs for real-time availability
+- [x] RAG integration - travel knowledge base for destination info and recommendations
+- [x] Session management - stateful conversations that remember user preferences
+- [x] Deployment to Vertex AI - publishing the agent to production
+
+**Context Engineering Demonstrations (7):**
+- [x] Real-time + static data fusion (live booking data + destination knowledge)
+- [x] Structured data grounding (inventory, pricing, availability constraints)
+- [x] Prompt engineering patterns (effective agent instruction design)
+- [x] Tools vs RAG vs Sessions decision framework
+- [x] Error-in-context pattern (graceful degradation)
+- [x] Cache-friendly patterns
+- [x] State prefix pattern (user:, temp:, app:)
+
+**Travel Booking Agent Capabilities (9):**
+- [x] Search hotels with user preferences and constraints
+- [x] Search flights with date/destination filters
+- [x] Budget filtering in search results
+- [x] Retrieve destination information from knowledge base
+- [x] Remember user preferences across conversation turns
+- [x] Infer unstated preferences from context
+- [x] Provide booking recommendations based on context
+- [x] Multi-turn conversation support
+- [x] Graceful error handling
+
+**Technical Infrastructure (8):**
+- [x] Mock flight API (no rate limits or costs)
+- [x] Mock hotel API (no rate limits or costs)
+- [x] 10 destination knowledge guides (pre-indexed)
+- [x] Colab-first environment (zero-install)
+- [x] pytest + AgentEvaluator tests
+- [x] Cost monitoring utilities
 
 ### Active
 
-**Workshop Materials:**
-- [ ] Step-by-step tutorial documentation with clear explanations for AI beginners
-- [ ] Starter code project (boilerplate) participants build upon
-- [ ] Complete reference implementation demonstrating all concepts
-- [ ] 3-4 progressive exercises building from simple to complete agent
-- [ ] Exercise solutions with detailed explanations
-- [ ] GCP and ADK setup instructions for pre-provisioned accounts
-
-**Core ADK Concepts (must be demonstrated):**
-- [ ] Function calling/tools - booking search APIs for real-time availability
-- [ ] RAG integration - travel knowledge base for destination info and recommendations
-- [ ] Session management - stateful conversations that remember user preferences
-- [ ] Deployment to Vertex AI - publishing the agent to production
-
-**Context Engineering Demonstrations:**
-- [ ] Real-time + static data fusion (live booking data + destination knowledge)
-- [ ] Structured data grounding (inventory, pricing, availability constraints)
-- [ ] Prompt engineering patterns (effective agent instruction design)
-
-**Travel Booking Agent Capabilities:**
-- [ ] Search hotels with user preferences and constraints
-- [ ] Search flights with date/destination filters
-- [ ] Retrieve destination information from knowledge base
-- [ ] Remember user preferences across conversation turns
-- [ ] Provide booking recommendations based on context
+(No active requirements - v1.0 complete)
 
 ### Out of Scope
 
@@ -70,7 +100,7 @@ Demonstrate how combining different context sources (real-time APIs, knowledge b
 
 ## Constraints
 
-- **Timeline**: Workshop must complete in 90 minutes including setup, 3-4 exercises, and deployment
+- **Timeline**: Workshop must complete in 90 minutes including setup, 4 exercises, and deployment
 - **Audience Level**: Beginners to AI agents - need conceptual explanations, not just code
 - **Cost**: Keep minimal - use free tier, avoid expensive Vertex AI operations, use small RAG corpus
 - **Tech Stack**: Google ADK, Vertex AI, Python 3, Flask - maintain consistency with reference project
@@ -81,10 +111,16 @@ Demonstrate how combining different context sources (real-time APIs, knowledge b
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Travel booking domain instead of sales | More relatable for workshop audience, demonstrates similar ADK patterns in different context | — Pending |
-| Progressive exercises (3-4) vs single build | Allows checkpoints, accommodates different pace learners, clearer concept isolation | — Pending |
-| Mock booking data vs real APIs | Keeps costs minimal, avoids API rate limits, simplifies setup, focuses on ADK concepts | — Pending |
-| Include deployment despite time constraint | Critical for production-ready understanding, distinguishes ADK from toy examples | — Pending |
+| Travel booking domain instead of sales | More relatable for workshop audience, demonstrates similar ADK patterns in different context | ✓ Good |
+| Progressive exercises (4) vs single build | Allows checkpoints, accommodates different pace learners, clearer concept isolation | ✓ Good |
+| Mock booking data vs real APIs | Keeps costs minimal, avoids API rate limits, simplifies setup, focuses on ADK concepts | ✓ Good |
+| Include deployment despite time constraint | Critical for production-ready understanding, distinguishes ADK from toy examples | ✓ Good |
+| Colab-first approach | Eliminates local environment setup for 90% of participants | ✓ Good |
+| Google AI API key (not Vertex AI) | Simpler participant experience, no GCP project config needed | ✓ Good |
+| Hybrid agent for RAG constraint | ADK can't mix RAG with function tools in single agent | ✓ Good |
+| State prefixes (user:, temp:, app:) | Clear persistence scope semantics | ✓ Good |
+| Three-layer solution format | Explains WHY patterns work, not just WHAT | ✓ Good |
+| 48-hour pre-validation | Catches setup issues before workshop day | ✓ Good |
 
 ---
-*Last updated: 2026-01-23 after initialization*
+*Last updated: 2026-01-24 after v1.0 milestone completion*
