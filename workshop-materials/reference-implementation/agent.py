@@ -15,6 +15,12 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai.types import Content, Part
 from tools import search_flights, search_hotels
+from state_utils import (
+    remember_preference,
+    get_preference,
+    clear_preference,
+    get_preference_injection_block,
+)
 
 # ============================================================
 # CONFIGURATION (Exercise 1: Setup)
@@ -66,6 +72,20 @@ RAG_CORPUS_ID = os.environ.get('RAG_CORPUS_ID')
 
 
 # ============================================================
+# SESSION MANAGEMENT (Exercise 4: State & Preferences)
+# ============================================================
+
+# State management uses prefixes to control persistence:
+# - No prefix: session-scoped (lost when session ends)
+# - user: prefix: persists across all user sessions
+# - temp: prefix: current invocation only
+# - app: prefix: shared across all users
+#
+# See state_utils.py for reusable preference management tools.
+# The agent instruction uses {user:budget?} syntax for state injection.
+
+
+# ============================================================
 # AGENT DEFINITION (Exercise 1: Basic Agent)
 # ============================================================
 
@@ -80,6 +100,13 @@ def create_agent() -> Agent:
     - Session memory for preferences (Exercise 4)
     """
 
+    # Build capability string based on RAG availability
+    rag_capability = ("- Provide destination information from knowledge base (visa, attractions, culture)"
+                     if RAG_CORPUS_ID else "# Knowledge base access coming in Exercise 3")
+
+    # Get preference injection block for state-aware instruction
+    preference_block = get_preference_injection_block()
+
     agent = Agent(
         model=MODEL,
         name='travel_booking_assistant',
@@ -87,22 +114,22 @@ def create_agent() -> Agent:
                     'find hotels, and provide destination information.',
 
         # The instruction is where context engineering happens
-        rag_capability = ("- Provide destination information from knowledge base (visa, attractions, culture)"
-                         if RAG_CORPUS_ID else "# Knowledge base access coming in Exercise 3")
-
         instruction=f'''You are an expert travel booking assistant.
+
+{preference_block}
 
 YOUR CAPABILITIES:
 - Search for flights between any airports worldwide
 - Find hotels in any destination
 {rag_capability}
 - Remember user preferences (budget, travel style, dietary needs)
+- Store and retrieve preferences for future conversations
 
 HOW TO HELP:
 1. When users ask about trips, gather key details:
    - Destination and dates
    - Number of travelers
-   - Budget range (if not stated, ask)
+   - Budget range (check saved preferences first, then ask if not set)
    - Any special requirements
 
 2. Use your tools to find real options:
@@ -115,13 +142,16 @@ HOW TO HELP:
    - Explain why you're recommending each option
    - Include prices and key details
 
-4. Remember preferences across the conversation:
-   - If they mention budget once, apply it to all searches
-   - Note dietary restrictions for restaurant suggestions
-   - Track their preferred travel style (luxury, budget, adventure)
+4. Manage preferences across sessions:
+   - Use remember_preference() to save user preferences
+   - Use get_preference() to check saved preferences
+   - Use clear_preference() to reset preferences
+   - Apply saved budget/style automatically to searches
 
 BUDGET AWARENESS:
-- If user mentions a budget, use max_price parameter for flights and max_price_per_night for hotels
+- Check {user:budget?} first for saved budget preference
+- If user mentions a budget, save it with remember_preference() for future use
+- Use max_price parameter for flights and max_price_per_night for hotels
 - When options are excluded due to budget constraints, explain this clearly
 - If nothing fits their budget, suggest the lowest available price or alternative options
 - Be proactive about budget - if they say "under $800", filter aggressively
@@ -134,10 +164,13 @@ TONE:
 If you can't find what they need, suggest alternatives or ask clarifying questions.
 ''',
 
-        # Tools: Functions the agent can call (Exercise 2)
+        # Tools: Functions the agent can call (Exercise 2 & 4)
         tools=[
             search_flights,
             search_hotels,
+            remember_preference,
+            get_preference,
+            clear_preference,
             # get_destination_knowledge(),  # Uncomment in Exercise 3
         ],
 
