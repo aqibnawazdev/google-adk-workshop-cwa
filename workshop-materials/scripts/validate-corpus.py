@@ -127,7 +127,6 @@ def validate_corpus(corpus_id: str) -> bool:
     """
     from google.adk.tools.retrieval.vertex_ai_rag_retrieval import VertexAiRagRetrieval
     from vertexai.preview import rag
-    import google.generativeai as genai
 
     logger.info("")
     logger.info("=" * 70)
