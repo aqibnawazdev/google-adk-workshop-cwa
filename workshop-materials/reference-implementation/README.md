@@ -188,11 +188,11 @@ reference-implementation/
 
 **1. Set up environment:**
 ```bash
-# Add to your .env file
-RAG_CORPUS_ID=projects/{project}/locations/{location}/ragCorpora/{corpus_id}
+# Add to your .env file (workshop corpus pre-indexed with 10 destination guides)
+RAG_CORPUS_ID=projects/674082857580/locations/europe-west1/ragCorpora/7493989779944505344
 ```
 
-The corpus ID is provided by your instructor (pre-indexed with 10 destination guides).
+The corpus ID above is pre-configured for the workshop. If running your own corpus, replace with your ID.
 
 **2. Configure RAG tool:**
 ```python
@@ -288,8 +288,8 @@ Without DO/DO NOT boundaries, the LLM may call RAG for real-time queries or call
 ### Environment Variables
 
 ```bash
-# Required for RAG integration
-RAG_CORPUS_ID=projects/{project}/locations/{location}/ragCorpora/{corpus_id}
+# Required for RAG integration (workshop corpus)
+RAG_CORPUS_ID=projects/674082857580/locations/europe-west1/ragCorpora/7493989779944505344
 
 # Optional tuning parameters (defaults shown)
 RAG_SIMILARITY_TOP_K=5          # Number of chunks to retrieve
