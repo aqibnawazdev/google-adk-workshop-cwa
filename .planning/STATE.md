@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 ## Current Position
 
 Phase: 3 of 5 (RAG & Knowledge Integration)
-Plan: 4 of 6 (03-01, 03-02, 03-04 complete)
-Status: In progress - RAG integration reference implementation complete
-Last activity: 2026-01-24 - Completed 03-04: RAG tools module, hybrid agent coordination pattern, main agent RAG integration
+Plan: 4 of 6 (03-01, 03-02, 03-03, 03-04 complete)
+Status: In progress - Corpus automation and RAG integration complete
+Last activity: 2026-01-24 - Completed 03-03: RAG corpus setup automation (PDF conversion, GCS upload, Vertex AI indexing with Document AI parser)
 
-Progress: [████████░░] 87%
+Progress: [████████░░] 88%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
+- Total plans completed: 11
 - Average duration: 4.0min
-- Total execution time: 0.67 hours
+- Total execution time: 0.73 hours
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [████████░░] 87%
 |-------|-------|-------|----------|
 | 1 (Foundation & Setup) | 4 | 12min | 3.0min |
 | 2 (Function Calling & Tools) | 3 | 8min | 2.7min |
-| 3 (RAG & Knowledge Integration) | 3 | 40min | 13.3min |
+| 3 (RAG & Knowledge Integration) | 4 | 44min | 11.0min |
 
 **Recent Trend:**
-- Last 5 plans: 03-04 (10min), 03-01 (16min), 03-02 (14min), 02-03 (1.5min), 02-02 (2min)
-- Trend: Phase 3 content creation time decreasing (03-04: 10min vs 03-01/02: 14-16min), reference implementation faster than content writing
+- Last 5 plans: 03-03 (4min), 03-04 (10min), 03-01 (16min), 03-02 (14min), 02-03 (1.5min)
+- Trend: Phase 3 automation scripts significantly faster (03-03: 4min) than content creation (03-01/02: 14-16min), efficiency improving
 
 *Updated after each plan completion*
 
@@ -83,6 +83,10 @@ Recent decisions affecting current work:
 - ASYNC FIX: Top-level await instead of asyncio.run() - Colab/Jupyter has existing event loop, asyncio.run() causes nested loop conflict
 - **AUTH DECISION: Switched from Vertex AI to Google AI API key approach** - Simpler participant experience (just get API key from aistudio.google.com/apikey), no GCP project config needed, eliminates vertexai.init() complexity. Vertex AI remains available for deployment topics if covered later.
 - **ADK API PATTERN: Use Runner + InMemorySessionService pattern (not agent.generate_content)** - Based on official docs and ADK_Learning_tools.ipynb example. The correct pattern is: genai.configure(api_key), Runner with InMemorySessionService, runner.run_async() with async for loop, event.is_final_response() to extract response. agent.generate_content() does not exist in ADK.
+- 03-03: Markdown2 + Weasyprint for PDF conversion - preserves tables, professional formatting, CSS control for Document AI parser input
+- 03-03: Document AI layout parser enabled (use_advanced_pdf_parsing) - preserves table/list structure in chunks (Pattern 2 from research)
+- 03-03: 1024 token chunk size / 256 overlap - research-recommended defaults, resolves "chunking strategy" blocker from Phase 3 concerns
+- 03-03: 48-hour pre-workshop setup timeline - allows indexing completion and validation before workshop (Pattern 1 from research)
 - 03-04: Sequential agent coordination pattern - ADK constraint prevents mixing VertexAiRagRetrieval with function tools, workaround uses separate specialized agents with routing logic
 - 03-04: Explicit DO/DO NOT tool descriptions - prevents LLM from calling RAG for real-time queries or tools for static knowledge (Pattern 3 from research)
 - 03-04: Graceful degradation for missing RAG_CORPUS_ID - all modules work before Exercise 3, error messages guide setup
@@ -95,7 +99,7 @@ None yet.
 
 **Phase 2 (Function Calling):** ~~Decision needed on mock vs real travel APIs~~ RESOLVED - Using mock APIs for workshop exercises (02-01/02-02). Eliminates costs, rate limits, API key management while keeping ADK patterns authentic.
 
-**Phase 3 (RAG):** Chunking strategy for travel content (destination guides, itineraries) needs testing with sample documents before finalizing exercise.
+**Phase 3 (RAG):** ~~Chunking strategy for travel content needs testing~~ RESOLVED - 1024 tokens / 256 overlap with Document AI layout parser enabled (03-03). Tables preserved in chunks, 13-query validation suite ready for pre-workshop testing.
 
 **Phase 4 (Deployment):** ~~Quota limits for 50 concurrent workshop participants hitting Vertex AI~~ REDUCED CONCERN - Workshop exercises now use Google AI API (no GCP quota needed). Only deployment topics (if covered) would use Vertex AI.
 
@@ -103,6 +107,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-24T10:17:55Z
-Stopped at: Completed 03-04-PLAN.md (RAG tools module, hybrid agent, main agent RAG integration)
+Last session: 2026-01-24T10:21:56Z
+Stopped at: Completed 03-03-PLAN.md (RAG corpus setup automation: PDF conversion, GCS upload, Vertex AI indexing)
 Resume file: None
