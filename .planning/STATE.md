@@ -11,8 +11,8 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 
 Phase: 3 of 5 (RAG & Knowledge Integration)
 Plan: 2 of 6 (03-01, 03-02 complete)
-Status: In progress - destination guide corpus complete (10 guides total), all notebook asyncio issues resolved
-Last activity: 2026-01-24 - Fixed asyncio event loop conflicts in ALL exercise notebooks (00, 01, 02)
+Status: In progress - destination guide corpus complete (10 guides total), ALL notebook blocking issues resolved (asyncio + Vertex AI init)
+Last activity: 2026-01-24 - Fixed asyncio conflicts + Vertex AI initialization across all notebooks (00, 01, 02) - workshops now fully functional
 
 Progress: [████████░░] 85%
 
@@ -83,6 +83,7 @@ Recent decisions affecting current work:
 - 00-setup-verification FIX: Top-level await instead of asyncio.run() - Colab/Jupyter has existing event loop, asyncio.run() causes nested loop conflict
 - 01-hello-agent FIX: Top-level await in Cells 7, 11 - same asyncio.run() issue blocked Exercise 1
 - 02-tools-functions FIX: Top-level await in Cells 21, 27 - same asyncio.run() issue blocked Exercise 2
+- ALL NOTEBOOKS FIX: Added vertexai.init() before Agent creation - ADK defaults to Google AI API without it, requires api_key parameter instead of using Vertex AI with GCP auth
 
 ### Pending Todos
 
