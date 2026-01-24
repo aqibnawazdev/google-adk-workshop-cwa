@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 ## Current Position
 
 Phase: 5 of 5 (Workshop Support Materials)
-Plan: 4 of 6 in current phase (05-02, 05-03, 05-04, 05-05 complete)
+Plan: 5 of 6 in current phase (05-01, 05-02, 05-03, 05-04, 05-05 complete)
 Status: In progress
-Last activity: 2026-01-24 - Completed 05-03-PLAN.md (Production Readiness Checklist)
+Last activity: 2026-01-24 - Completed 05-01-PLAN.md (Centralized Troubleshooting Guide)
 
-Progress: [██████████░] 92%
+Progress: [██████████░] 96%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 22
-- Average duration: 3.7min
-- Total execution time: 1.36 hours
+- Total plans completed: 23
+- Average duration: 3.6min
+- Total execution time: 1.39 hours
 
 **By Phase:**
 
@@ -31,10 +31,10 @@ Progress: [██████████░] 92%
 | 2 (Function Calling & Tools) | 3 | 8min | 2.7min |
 | 3 (RAG & Knowledge Integration) | 6 | 56min | 9.3min |
 | 4 (Sessions & Deployment) | 5 | 12min | 2.4min |
-| 5 (Workshop Support Materials) | 4 | ~9min | ~2.3min |
+| 5 (Workshop Support Materials) | 5 | ~12min | ~2.4min |
 
 **Recent Trend:**
-- Last 5 plans: 05-03 (3min), 05-05 (2min), 05-04 (2min), 05-02 (2min), 04-05 (2min)
+- Last 5 plans: 05-01 (3min), 05-03 (3min), 05-05 (2min), 05-04 (2min), 05-02 (2min)
 - Trend: Excellent velocity - Phase 5 maintaining fast pace
 
 *Updated after each plan completion*
@@ -119,6 +119,9 @@ Recent decisions affecting current work:
 - 05-03: Two-tier checklist (MVP Day 1-7, Mature Week 2+) for realistic production timelines
 - 05-03: AI-specific focus (evaluation, observability, cost, reliability) not generic software checklist
 - 05-03: Each checklist item includes 'why' explanation for informed prioritization
+- 05-01: Symptom-first troubleshooting organization - participants find errors by what they see, not by component
+- 05-01: 8 error pattern categories covering auth, deps, API, async, network, types, RAG, state
+- 05-01: Preserve inline troubleshooting in notebooks - quick help during exercises, link to detailed guide
 
 ### Pending Todos
 
@@ -136,6 +139,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-24T19:35:23Z
-Stopped at: Completed 05-03-PLAN.md (Production Readiness Checklist)
+Last session: 2026-01-24T19:55:00Z
+Stopped at: Completed 05-01-PLAN.md (Centralized Troubleshooting Guide)
 Resume file: None
