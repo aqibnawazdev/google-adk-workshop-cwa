@@ -196,11 +196,48 @@ fi
 echo "   ✓ Uploaded $PDF_COUNT PDF files to gs://$BUCKET_NAME/guides/"
 
 # ============================================================================
-# STEP 5: CREATE RAG CORPUS
+# STEP 5: DELETE EXISTING CORPUS (if any)
 # ============================================================================
 
 echo ""
-echo "[5/7] Creating RAG corpus..."
+echo "[5/8] Checking for existing corpus..."
+
+# List existing corpora and find matching one
+EXISTING_CORPORA=$(curl -s -X GET \
+  -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  "https://${LOCATION}-aiplatform.googleapis.com/v1beta1/projects/${PROJECT_ID}/locations/${LOCATION}/ragCorpora")
+
+# Find corpus with matching display name
+EXISTING_CORPUS_NAME=$(echo "$EXISTING_CORPORA" | jq -r '.ragCorpora[]? | select(.displayName == "'"$CORPUS_NAME"'") | .name' 2>/dev/null | head -1)
+
+if [ -n "$EXISTING_CORPUS_NAME" ] && [ "$EXISTING_CORPUS_NAME" != "null" ]; then
+    echo "   Found existing corpus: $EXISTING_CORPUS_NAME"
+    echo "   Deleting..."
+
+    DELETE_RESPONSE=$(curl -s -X DELETE \
+      -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+      "https://${LOCATION}-aiplatform.googleapis.com/v1beta1/${EXISTING_CORPUS_NAME}")
+
+    # Check for delete errors
+    if echo "$DELETE_RESPONSE" | jq -e '.error' >/dev/null 2>&1; then
+        echo "   ⚠ Warning: Could not delete existing corpus"
+        echo "$DELETE_RESPONSE" | jq '.error'
+        echo "   Proceeding anyway..."
+    else
+        echo "   ✓ Existing corpus deleted"
+        # Wait a moment for deletion to propagate
+        sleep 3
+    fi
+else
+    echo "   ✓ No existing corpus found with name: $CORPUS_NAME"
+fi
+
+# ============================================================================
+# STEP 6: CREATE RAG CORPUS
+# ============================================================================
+
+echo ""
+echo "[6/8] Creating RAG corpus..."
 
 # Create corpus via REST API (using v1beta1 for latest features)
 CORPUS_RESPONSE=$(curl -s -X POST \
@@ -235,11 +272,11 @@ echo "   Corpus ID: $CORPUS_ID"
 echo "   Full path: $FULL_CORPUS_ID"
 
 # ============================================================================
-# STEP 6: IMPORT PDFs TO CORPUS
+# STEP 7: IMPORT PDFs TO CORPUS
 # ============================================================================
 
 echo ""
-echo "[6/7] Importing PDFs to corpus..."
+echo "[7/8] Importing PDFs to corpus..."
 echo "   (This takes 5-10 minutes - indexing and embedding)"
 
 # Import PDFs with chunking configuration
@@ -278,11 +315,11 @@ echo "   Chunk overlap: 256 tokens"
 echo "   Chunking: fixed length"
 
 # ============================================================================
-# STEP 7: SAVE CORPUS ID AND DISPLAY COMPLETION INFO
+# STEP 8: SAVE CORPUS ID AND DISPLAY COMPLETION INFO
 # ============================================================================
 
 echo ""
-echo "[7/7] Saving corpus information..."
+echo "[8/8] Saving corpus information..."
 
 # Save to file
 echo "$FULL_CORPUS_ID" > corpus-id.txt
