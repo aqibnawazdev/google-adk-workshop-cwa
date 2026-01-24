@@ -11,8 +11,8 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 
 Phase: 3 of 5 (RAG & Knowledge Integration)
 Plan: 2 of 6 (03-01, 03-02 complete)
-Status: In progress - destination guide corpus complete (10 guides total), ALL notebook blocking issues resolved (asyncio + Vertex AI init)
-Last activity: 2026-01-24 - Fixed asyncio conflicts + Vertex AI initialization across all notebooks (00, 01, 02) - workshops now fully functional
+Status: In progress - destination guide corpus complete (10 guides total), switched to Google AI API key approach for simpler workshop experience
+Last activity: 2026-01-24 - Switched from Vertex AI to Google AI API key approach - removed all vertexai.init() calls, uses GOOGLE_API_KEY env var
 
 Progress: [████████░░] 85%
 
@@ -80,15 +80,8 @@ Recent decisions affecting current work:
 - 03-02: Table format for attractions with booking details - tests layout-aware chunking (Document AI parser must preserve table structure)
 - 03-02: Cultural sensitivity emphasized - Dubai Islamic customs, Bangkok monarchy respect, Barcelona Catalan identity
 - 03-02: Balanced practical and cultural content - authentic guides serve dual purpose (RAG corpus + educational resource)
-- 00-setup-verification FIX: Top-level await instead of asyncio.run() - Colab/Jupyter has existing event loop, asyncio.run() causes nested loop conflict
-- 01-hello-agent FIX: Top-level await in Cells 7, 11 - same asyncio.run() issue blocked Exercise 1
-- 02-tools-functions FIX: Top-level await in Cells 21, 27 - same asyncio.run() issue blocked Exercise 2
-- ALL NOTEBOOKS FIX: Added vertexai.init() before Agent creation - ADK defaults to Google AI API without it, requires api_key parameter instead of using Vertex AI with GCP auth
-- 00-setup-verification FIX v2: Moved vertexai.init() to CELL LEVEL (not inside try block) - must initialize BEFORE Agent() constructor is called
-- 01-hello-agent FIX v2: Added vertexai.init() to Cell 15 (duplicate solution cell) for completeness
-- 02-tools-functions FIX v2: Added vertexai.init() to Cells 19, 20, 27, 28 (all Agent creation cells) - completes Vertex AI initialization across all workshop notebooks
-- CRITICAL LEARNING: vertexai.init() needed in EVERY cell making API calls (not just Agent creation cells) - Cells 7, 8, 11 in 01-hello-agent and Cells 21, 22 in 02-tools-functions all need initialization before runner.run_async() or agent.generate_content()
-- CRITICAL LEARNING v2: ORDER MATTERS - vertexai.init() must be called BEFORE importing ANY ADK components (Agent, Runner, etc.) - genai library registers config during import
+- ASYNC FIX: Top-level await instead of asyncio.run() - Colab/Jupyter has existing event loop, asyncio.run() causes nested loop conflict
+- **AUTH DECISION: Switched from Vertex AI to Google AI API key approach** - Simpler participant experience (just get API key from aistudio.google.com/apikey), no GCP project config needed, eliminates vertexai.init() complexity. Vertex AI remains available for deployment topics if covered later.
 
 ### Pending Todos
 
@@ -100,7 +93,7 @@ None yet.
 
 **Phase 3 (RAG):** Chunking strategy for travel content (destination guides, itineraries) needs testing with sample documents before finalizing exercise.
 
-**Phase 4 (Deployment):** Quota limits for 50 concurrent workshop participants hitting Vertex AI need coordination with Google for quota increases.
+**Phase 4 (Deployment):** ~~Quota limits for 50 concurrent workshop participants hitting Vertex AI~~ REDUCED CONCERN - Workshop exercises now use Google AI API (no GCP quota needed). Only deployment topics (if covered) would use Vertex AI.
 
 **01-01/01-04 Consideration:** Troubleshooting URLs currently show placeholders (`[workshop-repo-url]`, `[instructor contact info]`). Should be replaced when workshop support infrastructure created (Phase 5).
 
