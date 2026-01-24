@@ -24,7 +24,7 @@ Build a production-ready AI agent that can search flights, find hotels, and prov
 | [01-hello-agent.ipynb](./01-hello-agent.ipynb) | Exercise 1: Create your first agent | 15 min |
 | [02-tools-functions.ipynb](./02-tools-functions.ipynb) | Exercise 2: Add function calling | 20 min |
 | [03-rag-knowledge.ipynb](./03-rag-knowledge.ipynb) | Exercise 3: Integrate knowledge base | 20 min |
-| [04-sessions-memory.ipynb](./04-sessions-memory.ipynb) | Exercise 4: Add session memory | 20 min |
+| [04-sessions-state.ipynb](./04-sessions-state.ipynb) | Exercise 4: Add session memory | 20 min |
 
 ### Falling Behind?
 

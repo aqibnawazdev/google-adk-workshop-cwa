@@ -99,7 +99,7 @@ What you can do:
 
 Files ready to use:
 - Complete implementation of all exercises
-- `04-sessions-memory.ipynb`: State management complete
+- `04-sessions-state.ipynb`: State management complete
 - `reference-implementation/state_utils.py`: Preference management utilities
 
 What you can do:
