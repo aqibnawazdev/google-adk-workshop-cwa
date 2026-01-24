@@ -42,17 +42,27 @@ MODEL = 'gemini-2.5-flash'
 # KNOWLEDGE BASE (Exercise 3: RAG Integration)
 # ============================================================
 
-# The agent can retrieve destination information from a knowledge base.
-# You'll set this up with Vertex AI RAG in Exercise 3.
-
-# RAG_CORPUS_ID = os.environ.get('RAG_CORPUS_ID', None)
+# The agent can retrieve destination information from a pre-indexed
+# knowledge base using Vertex AI RAG Engine.
 #
-# def get_destination_knowledge():
-#     """Configure RAG knowledge base for destination information."""
-#     if RAG_CORPUS_ID:
-#         from google.adk.tools import VertexAIRag
-#         return VertexAIRag(corpus_id=RAG_CORPUS_ID)
-#     return None
+# IMPORTANT: Due to ADK constraints, RAG tools cannot be mixed with
+# function calling tools in the same agent. For hybrid capabilities,
+# see hybrid_agent.py which coordinates separate specialized agents.
+#
+# To enable RAG-only destination expert:
+#   1. Set RAG_CORPUS_ID environment variable
+#   2. Use create_destination_agent() from hybrid_agent.py
+#
+# For hybrid travel assistant (tools + RAG):
+#   from hybrid_agent import HybridTravelAssistant
+#   assistant = HybridTravelAssistant()
+#   response = await assistant.assist("your query")
+
+RAG_CORPUS_ID = os.environ.get('RAG_CORPUS_ID')
+
+# Uncomment for Exercise 3 RAG-only agent:
+# from rag_tools import create_destination_knowledge_tool
+# destination_knowledge = create_destination_knowledge_tool()
 
 
 # ============================================================
@@ -77,12 +87,15 @@ def create_agent() -> Agent:
                     'find hotels, and provide destination information.',
 
         # The instruction is where context engineering happens
-        instruction='''You are an expert travel booking assistant.
+        rag_capability = ("- Provide destination information from knowledge base (visa, attractions, culture)"
+                         if RAG_CORPUS_ID else "# Knowledge base access coming in Exercise 3")
+
+        instruction=f'''You are an expert travel booking assistant.
 
 YOUR CAPABILITIES:
 - Search for flights between any airports worldwide
 - Find hotels in any destination
-- Provide destination information, visa requirements, and travel tips
+{rag_capability}
 - Remember user preferences (budget, travel style, dietary needs)
 
 HOW TO HELP:
@@ -133,6 +146,20 @@ If you can't find what they need, suggest alternatives or ask clarifying questio
     )
 
     return agent
+
+
+# ============================================================
+# HYBRID ASSISTANT (Exercise 3 Complete)
+# ============================================================
+
+# For the complete travel assistant with both booking tools AND
+# destination knowledge, use the hybrid assistant:
+#
+# from hybrid_agent import HybridTravelAssistant
+# assistant = HybridTravelAssistant()
+# response = await assistant.assist("Find flights to Tokyo and visa requirements")
+#
+# This coordinates two specialized agents to provide comprehensive answers.
 
 
 # ============================================================
