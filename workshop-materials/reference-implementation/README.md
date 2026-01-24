@@ -337,6 +337,197 @@ RAG_VECTOR_THRESHOLD=0.6        # Minimum similarity score (0.0-1.0)
 2. Authenticate: `gcloud auth application-default login`
 3. Run: `python agent.py` or `adk run agent.py`
 
+## State Management
+
+Exercise 4 introduces persistent state using ADK's state prefix system. This allows the agent to remember user preferences across conversations.
+
+### State Prefixes
+
+| Prefix | Scope | Persistence | Use Case |
+|--------|-------|-------------|----------|
+| (none) | Session | Current conversation only | Temp data, context |
+| `user:` | User | Across all user sessions | Preferences, settings |
+| `temp:` | Invocation | Single tool call | Intermediate calculations |
+| `app:` | Application | All users, all sessions | Global config |
+
+### Preference Storage
+
+The agent can remember and apply user preferences:
+
+```python
+from state_utils import remember_preference, get_preference
+
+# In agent tools list:
+tools=[search_flights, search_hotels, remember_preference, get_preference, clear_preference]
+
+# User says: "Remember my budget is $1500"
+# Agent calls: remember_preference("budget", "1500", tool_context)
+# Stored as: tool_context.state["user:budget"] = 1500
+```
+
+### State Injection
+
+Inject saved preferences into agent instructions using `{key?}` syntax:
+
+```python
+instruction='''You are a travel assistant.
+
+Current user preferences:
+- Budget: ${user:budget?} (empty if not set)
+- Travel style: {user:travel_style?}
+
+If a preference is set, apply it automatically to searches.
+'''
+```
+
+The `?` makes injection optional - no error if key is missing.
+
+### Supported Preferences
+
+| Preference | State Key | Example Value |
+|------------|-----------|---------------|
+| Budget | `user:budget` | 1500 |
+| Travel style | `user:travel_style` | "luxury" |
+| Dietary restrictions | `user:dietary_restrictions` | ["vegetarian", "halal"] |
+| Preferred airlines | `user:preferred_airlines` | ["United", "ANA"] |
+| Min hotel rating | `user:hotel_rating_min` | 4 |
+
+See `state_utils.py` for complete implementation.
+
+---
+
+## Deployment
+
+Deploy your agent to Vertex AI Agent Engine for production use.
+
+### Quick Deployment
+
+```bash
+# Set environment
+export GOOGLE_CLOUD_PROJECT="your-project-id"
+export STAGING_BUCKET="gs://your-bucket-adk-staging"
+
+# Deploy
+python deploy.py --action deploy
+
+# Test deployed agent
+python deploy.py --action test --endpoint "projects/.../reasoningEngines/..."
+
+# Cleanup (important - stops billing!)
+python deploy.py --action cleanup --endpoint "projects/.../reasoningEngines/..."
+```
+
+### Prerequisites
+
+1. GCP project with Vertex AI enabled
+2. Cloud Storage bucket for staging
+3. IAM roles: `aiplatform.user`, `storage.objectCreator`
+4. Python packages: `google-cloud-aiplatform>=1.60.0`, `google-adk`
+
+### What Deployment Provides
+
+- Managed infrastructure (no servers to maintain)
+- Built-in session management
+- Secure HTTPS endpoints with IAM auth
+- Integrated monitoring and logging
+- Automatic scaling
+
+See [DEPLOYMENT.md](../DEPLOYMENT.md) for complete documentation.
+
+---
+
+## Testing with AgentEvaluator
+
+The `tests/` directory contains reference tests using ADK's AgentEvaluator framework.
+
+### Running Tests
+
+```bash
+# Install test dependencies
+pip install pytest pytest-asyncio
+
+# Run all tests
+pytest tests/ -v
+
+# Run specific test
+pytest tests/test_travel_agent.py::test_flight_search -v
+```
+
+### Test Structure
+
+```
+tests/
+├── README.md                       # Test documentation
+├── test_travel_agent.py            # pytest test file
+├── conftest.py                     # pytest configuration
+└── eval_datasets/                  # Golden test data
+    ├── flight_search.test.json     # Flight search scenarios
+    └── preference_memory.test.json # Preference persistence scenarios
+```
+
+### What AgentEvaluator Tests
+
+| Metric | Description | Default Threshold |
+|--------|-------------|-------------------|
+| `tool_trajectory_avg_score` | Tool call accuracy | >= 0.8 |
+| `response_match_score` | Response quality | >= 0.7 |
+
+Golden datasets define expected tool calls in `intermediate_data.tool_uses` and expected response patterns in `final_response`.
+
+See `tests/README.md` for writing custom test scenarios.
+
+---
+
+## Cost Monitoring
+
+Track API costs during workshop sessions and estimate production budgets.
+
+### Using the Cost Tracker
+
+```python
+from cost_tracker import WorkshopCostTracker, estimate_workshop_cost
+
+# Track individual queries
+tracker = WorkshopCostTracker()
+
+# Option 1: From ADK response with usage_metadata
+tracker.log_query(response, query="Find flights to Tokyo")
+
+# Option 2: Log tokens directly
+tracker.log_tokens_directly(input_tokens=500, output_tokens=200)
+
+# Get summary
+summary = tracker.get_summary()
+print(f"Total cost: ${summary.total_cost_usd:.4f}")
+
+# Print formatted report
+tracker.print_report()
+```
+
+### Gemini 2.5 Flash Pricing
+
+| Token Type | Price per 1M Tokens |
+|------------|---------------------|
+| Input | $0.30 |
+| Output (thinking mode) | $2.50 |
+
+### Workshop Cost Estimation
+
+```python
+estimate = estimate_workshop_cost(
+    participants=25,
+    queries_per_participant=20,
+    avg_input_tokens=500,
+    avg_output_tokens=200
+)
+print(f"Estimated workshop cost: ${estimate['total_cost']:.2f}")
+# ~$0.33 for a 25-person workshop
+```
+
+See `cost_tracker.py` for complete implementation.
+
+---
+
 ## File Structure
 
 ```
@@ -345,6 +536,13 @@ reference-implementation/
 ├── tools.py          # Tool function implementations (flights, hotels)
 ├── rag_tools.py      # RAG retrieval tool configuration (Exercise 3)
 ├── hybrid_agent.py   # Hybrid coordinator pattern (Exercise 3)
+├── state_utils.py    # State management utilities (Exercise 4)
+├── deploy.py         # Vertex AI Agent Engine deployment script
+├── cost_tracker.py   # Token usage and cost tracking utility
+├── tests/            # AgentEvaluator test suite
+│   ├── test_travel_agent.py
+│   ├── conftest.py
+│   └── eval_datasets/
 ├── README.md         # This file
 └── .env.template     # Environment configuration
 ```
@@ -354,9 +552,17 @@ reference-implementation/
 | Exercise | What You'll Add | Files Modified |
 |----------|-----------------|----------------|
 | 1. Hello Agent | Basic agent creation | agent.py (base) |
-| 2. Function Calling | search_flights, search_hotels | agent.py (tools) |
-| 3. RAG Integration | Destination knowledge base | agent.py (knowledge) |
-| 4. Sessions | Preference memory | agent.py (session_config) |
+| 2. Function Calling | search_flights, search_hotels | agent.py, tools.py |
+| 3. RAG Integration | Destination knowledge base | agent.py, rag_tools.py, hybrid_agent.py |
+| 4. Sessions | Preference memory | agent.py, state_utils.py |
+
+### Post-Workshop Exploration
+
+| Topic | Files | Documentation |
+|-------|-------|---------------|
+| Deployment | deploy.py | [DEPLOYMENT.md](../DEPLOYMENT.md) |
+| Testing | tests/ | tests/README.md |
+| Cost tracking | cost_tracker.py | This file |
 
 ## Testing
 
@@ -367,6 +573,8 @@ python -c "from agent import create_agent; a = create_agent(); print(f'Agent cre
 ```
 
 For full agent testing with conversations, use the workshop notebooks which have the proper async Runner pattern.
+
+For automated testing with golden datasets, see the Testing section above.
 
 ## Need Help?
 
