@@ -88,10 +88,10 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Exercise 4 notebook for state management (04-sessions-state.ipynb)
-- [ ] 04-02-PLAN.md — Reference implementation state utilities (state_utils.py, agent.py updates)
+- [x] 04-01-PLAN.md — Exercise 4 notebook for state management (04-sessions-state.ipynb)
+- [x] 04-02-PLAN.md — Reference implementation state utilities (state_utils.py, agent.py updates)
 - [ ] 04-03-PLAN.md — Deployment guide and script (DEPLOYMENT.md, deploy.py)
-- [ ] 04-04-PLAN.md — AgentEvaluator reference tests (tests/, eval datasets)
+- [x] 04-04-PLAN.md — AgentEvaluator reference tests (tests/, eval datasets)
 - [ ] 04-05-PLAN.md — Cost monitoring and README update (cost_tracker.py, README.md)
 
 ### Phase 5: Workshop Support Materials
@@ -121,5 +121,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation & Setup | 4/4 | Complete | 2026-01-23 |
 | 2. Function Calling & Tools | 3/3 | Complete | 2026-01-24 |
 | 3. RAG & Knowledge Integration | 6/6 | Complete | 2026-01-24 |
-| 4. Sessions & Deployment | 0/5 | Not started | - |
+| 4. Sessions & Deployment | 3/5 | In progress | - |
 | 5. Workshop Support Materials | 0/TBD | Not started | - |

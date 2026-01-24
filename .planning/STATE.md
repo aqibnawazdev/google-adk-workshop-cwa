@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 ## Current Position
 
 Phase: 4 of 5 (Sessions & Deployment)
-Plan: 2 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-01-24 - Completed 04-02-PLAN.md (Reference Implementation State Management)
+Last activity: 2026-01-24 - Completed 04-04-PLAN.md (AgentEvaluator Reference Tests)
 
-Progress: [███████░░░] 68%
+Progress: [████████░░] 77%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
-- Average duration: 4.2min
-- Total execution time: 1.05 hours
+- Total plans completed: 17
+- Average duration: 4.0min
+- Total execution time: 1.13 hours
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Progress: [███████░░░] 68%
 | 1 (Foundation & Setup) | 4 | 12min | 3.0min |
 | 2 (Function Calling & Tools) | 3 | 8min | 2.7min |
 | 3 (RAG & Knowledge Integration) | 6 | 56min | 9.3min |
-| 4 (Sessions & Deployment) | 2 | 6min | 3.0min |
+| 4 (Sessions & Deployment) | 4 | 10min | 2.5min |
 
 **Recent Trend:**
-- Last 5 plans: 04-02 (3min), 04-01 (3min), 03-06 (5min), 03-05 (7min), 03-03 (4min)
-- Trend: Excellent velocity - reference implementation updates fast (04-02: 3min)
+- Last 5 plans: 04-04 (2min), 04-02 (3min), 04-01 (3min), 03-06 (5min), 03-05 (7min)
+- Trend: Excellent velocity - testing infrastructure fast (04-04: 2min)
 
 *Updated after each plan completion*
 
@@ -102,6 +102,11 @@ Recent decisions affecting current work:
 - 04-02: state_utils.py as reusable module - centralizes preference management for reference implementation
 - 04-02: tool_context parameter follows ADK convention - framework-injected context for state access
 - 04-02: Helper functions take state dict directly - flexible API for both tool_context.state and session state
+- 04-03: Post-workshop deployment focus - impractical for hands-on during 15-minute allocation
+- 04-03: Instructor demonstration model - deploy.py enables live demo without participant GCP setup
+- 04-03: Cleanup prominence in documentation - cost awareness is critical for participants
+- 04-04: AgentEvaluator pattern with eval_dataset_file_path_or_dir for golden dataset testing
+- 04-04: Golden datasets with tool_uses in intermediate_data for trajectory validation
 
 ### Pending Todos
 
@@ -119,6 +124,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-24T13:57:40Z
-Stopped at: Completed 04-02-PLAN.md (Reference Implementation State Management)
+Last session: 2026-01-24T14:03:32Z
+Stopped at: Completed 04-04-PLAN.md (AgentEvaluator Reference Tests)
 Resume file: None
