@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation & Setup** - Environment setup, basic agent, and reference implementation
 - [x] **Phase 2: Function Calling & Tools** - Real-time booking search with flight/hotel APIs
 - [x] **Phase 3: RAG & Knowledge Integration** - Destination knowledge retrieval and recommendations
-- [ ] **Phase 4: Sessions & Deployment** - State management, conversation persistence, and Vertex AI deployment
+- [x] **Phase 4: Sessions & Deployment** - State management, conversation persistence, and Vertex AI deployment
 - [ ] **Phase 5: Workshop Support Materials** - Exercises, solutions, troubleshooting, and validation systems
 
 ## Phase Details
@@ -90,9 +90,9 @@ Plans:
 Plans:
 - [x] 04-01-PLAN.md — Exercise 4 notebook for state management (04-sessions-state.ipynb)
 - [x] 04-02-PLAN.md — Reference implementation state utilities (state_utils.py, agent.py updates)
-- [ ] 04-03-PLAN.md — Deployment guide and script (DEPLOYMENT.md, deploy.py)
+- [x] 04-03-PLAN.md — Deployment guide and script (DEPLOYMENT.md, deploy.py)
 - [x] 04-04-PLAN.md — AgentEvaluator reference tests (tests/, eval datasets)
-- [ ] 04-05-PLAN.md — Cost monitoring and README update (cost_tracker.py, README.md)
+- [x] 04-05-PLAN.md — Cost monitoring and README update (cost_tracker.py, README.md)
 
 ### Phase 5: Workshop Support Materials
 **Goal**: Participants can complete all exercises with solutions, troubleshooting, and validation support
@@ -121,5 +121,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation & Setup | 4/4 | Complete | 2026-01-23 |
 | 2. Function Calling & Tools | 3/3 | Complete | 2026-01-24 |
 | 3. RAG & Knowledge Integration | 6/6 | Complete | 2026-01-24 |
-| 4. Sessions & Deployment | 3/5 | In progress | - |
+| 4. Sessions & Deployment | 5/5 | Complete | 2026-01-24 |
 | 5. Workshop Support Materials | 0/TBD | Not started | - |
