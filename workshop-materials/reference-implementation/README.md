@@ -578,6 +578,24 @@ For full agent testing with conversations, use the workshop notebooks which have
 
 For automated testing with golden datasets, see the Testing section above.
 
+---
+
+## Beyond the Workshop
+
+Ready to take your agent to production? Use our AI-agent-specific production readiness checklist:
+
+**[Production Readiness Checklist](../PRODUCTION-READINESS.md)**
+
+Covers:
+- **Evaluation:** Golden datasets, AgentEvaluator, human review loops
+- **Observability:** Logging, tracing, alerting for LLM systems
+- **Cost Management:** Token tracking, budget alerts, model routing
+- **Reliability:** Error handling, failover, rollback procedures
+
+Start with the MVP checklist (Day 1-7), then progress to Mature production (Week 2+).
+
+---
+
 ## Need Help?
 
 - Workshop troubleshooting guide: [Link]
