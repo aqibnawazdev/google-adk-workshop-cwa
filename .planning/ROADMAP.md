@@ -47,10 +47,12 @@ Plans:
   3. Agent handles API errors gracefully with helpful error messages when searches fail
   4. Agent filters search results by user's stated budget constraints
   5. Workshop materials explain when to use function calling vs RAG vs session state with decision framework
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: TBD during phase planning
+- [ ] 02-01-PLAN.md — Function calling exercise notebook (02-tools-functions.ipynb)
+- [ ] 02-02-PLAN.md — Reference implementation tools (tools.py with search_flights, search_hotels)
+- [ ] 02-03-PLAN.md — Reference implementation README update (decision framework, tool docs)
 
 ### Phase 3: RAG & Knowledge Integration
 **Goal**: Agent retrieves destination information from knowledge base and provides smart recommendations
@@ -108,7 +110,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Setup | 4/4 | Complete | 2026-01-23 |
-| 2. Function Calling & Tools | 0/TBD | Not started | - |
+| 2. Function Calling & Tools | 0/3 | In progress | - |
 | 3. RAG & Knowledge Integration | 0/TBD | Not started | - |
 | 4. Sessions & Deployment | 0/TBD | Not started | - |
 | 5. Workshop Support Materials | 0/TBD | Not started | - |
