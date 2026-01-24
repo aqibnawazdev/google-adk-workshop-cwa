@@ -88,6 +88,7 @@ Recent decisions affecting current work:
 - 01-hello-agent FIX v2: Added vertexai.init() to Cell 15 (duplicate solution cell) for completeness
 - 02-tools-functions FIX v2: Added vertexai.init() to Cells 19, 20, 27, 28 (all Agent creation cells) - completes Vertex AI initialization across all workshop notebooks
 - CRITICAL LEARNING: vertexai.init() needed in EVERY cell making API calls (not just Agent creation cells) - Cells 7, 8, 11 in 01-hello-agent and Cells 21, 22 in 02-tools-functions all need initialization before runner.run_async() or agent.generate_content()
+- CRITICAL LEARNING v2: ORDER MATTERS - vertexai.init() must be called BEFORE importing ANY ADK components (Agent, Runner, etc.) - genai library registers config during import
 
 ### Pending Todos
 
