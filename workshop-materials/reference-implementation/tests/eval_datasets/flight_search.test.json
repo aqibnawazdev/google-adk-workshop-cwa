@@ -1,0 +1,102 @@
+{
+  "eval_set_id": "flight_search_tests",
+  "name": "Flight Search Behavior Validation",
+  "description": "Tests that the travel agent correctly uses search_flights tool",
+  "eval_cases": [
+    {
+      "eval_id": "basic_flight_search",
+      "session_input": {
+        "app_name": "travel_booking_assistant",
+        "user_id": "eval_user_1"
+      },
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [{"text": "Find flights from San Francisco to Tokyo on March 15, 2026"}]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {
+                  "origin": "SFO",
+                  "destination": "NRT",
+                  "departure_date": "2026-03-15"
+                }
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [{"text": "I found several flight options from San Francisco to Tokyo"}]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "flight_search_with_budget",
+      "session_input": {
+        "app_name": "travel_booking_assistant",
+        "user_id": "eval_user_2"
+      },
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [{"text": "Find flights from SFO to Tokyo under $900 on March 15, 2026"}]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {
+                  "origin": "SFO",
+                  "destination": "NRT",
+                  "departure_date": "2026-03-15",
+                  "max_price": 900
+                }
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [{"text": "I found 1 flight under $900"}]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "flight_search_multi_passenger",
+      "session_input": {
+        "app_name": "travel_booking_assistant",
+        "user_id": "eval_user_3"
+      },
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [{"text": "I need flights for 2 people from LAX to Paris on April 1, 2026"}]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {
+                  "origin": "LAX",
+                  "destination": "CDG",
+                  "departure_date": "2026-04-01",
+                  "passengers": 2
+                }
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [{"text": "I found flight options for 2 passengers from Los Angeles to Paris"}]
+          }
+        }
+      ]
+    }
+  ]
+}

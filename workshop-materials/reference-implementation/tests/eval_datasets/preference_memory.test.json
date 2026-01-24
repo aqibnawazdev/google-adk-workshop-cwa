@@ -1,0 +1,123 @@
+{
+  "eval_set_id": "preference_memory_tests",
+  "name": "User Preference Persistence Validation",
+  "description": "Tests that the agent remembers and applies user preferences",
+  "eval_cases": [
+    {
+      "eval_id": "remember_budget_preference",
+      "session_input": {
+        "app_name": "travel_booking_assistant",
+        "user_id": "pref_user_1"
+      },
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [{"text": "Remember that my budget is $1500 for trips"}]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "remember_preference",
+                "args": {
+                  "preference_type": "budget",
+                  "value": "1500"
+                }
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [{"text": "I'll remember that your budget is $1500"}]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "apply_saved_budget",
+      "session_input": {
+        "app_name": "travel_booking_assistant",
+        "user_id": "pref_user_2",
+        "state": {
+          "user:budget": 1000
+        }
+      },
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [{"text": "Find hotels in Tokyo for March 15-20"}]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_hotels",
+                "args": {
+                  "location": "Tokyo",
+                  "check_in": "2026-03-15",
+                  "check_out": "2026-03-20",
+                  "max_price_per_night": 200
+                }
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [{"text": "Based on your $1000 budget, I found hotels"}]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "multi_turn_preference_flow",
+      "session_input": {
+        "app_name": "travel_booking_assistant",
+        "user_id": "pref_user_3"
+      },
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [{"text": "My budget is $2000 for this trip"}]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "remember_preference",
+                "args": {
+                  "preference_type": "budget",
+                  "value": "2000"
+                }
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [{"text": "I'll remember your $2000 budget"}]
+          }
+        },
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [{"text": "Now find flights to Singapore"}]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "search_flights",
+                "args": {
+                  "destination": "SIN",
+                  "max_price": 2000
+                }
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [{"text": "Here are flights to Singapore within your budget"}]
+          }
+        }
+      ]
+    }
+  ]
+}
