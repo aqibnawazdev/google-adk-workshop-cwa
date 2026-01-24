@@ -240,7 +240,8 @@ echo ""
 echo "[6/8] Creating RAG corpus..."
 
 # Create corpus via REST API (using v1beta1 for latest features)
-CORPUS_RESPONSE=$(curl -s -X POST \
+# This returns a long-running operation
+CREATE_RESPONSE=$(curl -s -X POST \
   -H "Authorization: Bearer $(gcloud auth print-access-token)" \
   -H "Content-Type: application/json" \
   "https://${LOCATION}-aiplatform.googleapis.com/v1beta1/projects/${PROJECT_ID}/locations/${LOCATION}/ragCorpora" \
@@ -250,48 +251,62 @@ CORPUS_RESPONSE=$(curl -s -X POST \
   }')
 
 # Check for errors
-if echo "$CORPUS_RESPONSE" | jq -e '.error' >/dev/null 2>&1; then
+if echo "$CREATE_RESPONSE" | jq -e '.error' >/dev/null 2>&1; then
     echo "❌ Failed to create corpus"
-    echo "$CORPUS_RESPONSE" | jq '.error'
+    echo "$CREATE_RESPONSE" | jq '.error'
     exit 1
 fi
 
-# Extract corpus ID
-CORPUS_ID=$(echo "$CORPUS_RESPONSE" | jq -r '.name' | awk -F'/' '{print $NF}')
+# Extract operation name (createRagCorpus is async)
+OPERATION_NAME=$(echo "$CREATE_RESPONSE" | jq -r '.name')
 
-if [ -z "$CORPUS_ID" ] || [ "$CORPUS_ID" = "null" ]; then
-    echo "❌ Failed to extract corpus ID from response"
-    echo "Response: $CORPUS_RESPONSE"
+if [ -z "$OPERATION_NAME" ] || [ "$OPERATION_NAME" = "null" ]; then
+    echo "❌ Failed to get operation name from response"
+    echo "Response: $CREATE_RESPONSE"
     exit 1
 fi
 
-FULL_CORPUS_ID="projects/${PROJECT_ID}/locations/${LOCATION}/ragCorpora/${CORPUS_ID}"
+echo "   Operation started: ${OPERATION_NAME##*/}"
+echo "   Waiting for corpus creation to complete..."
 
-echo "   ✓ Corpus created"
-echo "   Corpus ID: $CORPUS_ID"
-echo "   Full path: $FULL_CORPUS_ID"
-
-# Wait for corpus to be ready (async creation)
-echo "   Waiting for corpus to be ready..."
-MAX_WAIT=60
+# Poll operation until done (max 120 seconds)
+MAX_WAIT=120
 WAITED=0
 while [ $WAITED -lt $MAX_WAIT ]; do
-    CORPUS_STATUS=$(curl -s -X GET \
+    OPERATION_STATUS=$(curl -s -X GET \
       -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-      "https://${LOCATION}-aiplatform.googleapis.com/v1beta1/${FULL_CORPUS_ID}")
+      "https://${LOCATION}-aiplatform.googleapis.com/v1beta1/${OPERATION_NAME}")
 
-    if echo "$CORPUS_STATUS" | jq -e '.name' >/dev/null 2>&1; then
-        echo "   ✓ Corpus is ready"
+    # Check if operation is done
+    IS_DONE=$(echo "$OPERATION_STATUS" | jq -r '.done')
+
+    if [ "$IS_DONE" = "true" ]; then
+        # Check for operation error
+        if echo "$OPERATION_STATUS" | jq -e '.error' >/dev/null 2>&1; then
+            echo "❌ Corpus creation failed"
+            echo "$OPERATION_STATUS" | jq '.error'
+            exit 1
+        fi
+
+        # Extract corpus from response
+        FULL_CORPUS_ID=$(echo "$OPERATION_STATUS" | jq -r '.response.name')
+        CORPUS_ID=$(echo "$FULL_CORPUS_ID" | awk -F'/' '{print $NF}')
+
+        echo "   ✓ Corpus created successfully"
+        echo "   Corpus ID: $CORPUS_ID"
+        echo "   Full path: $FULL_CORPUS_ID"
         break
     fi
 
     sleep 5
     WAITED=$((WAITED + 5))
-    echo "   Still waiting... (${WAITED}s)"
+    echo "   Still creating... (${WAITED}s)"
 done
 
 if [ $WAITED -ge $MAX_WAIT ]; then
-    echo "   ⚠ Warning: Corpus may not be fully ready, proceeding anyway..."
+    echo "❌ Corpus creation timed out after ${MAX_WAIT}s"
+    echo "Check status manually: gcloud ai operations describe ${OPERATION_NAME##*/} --region=$LOCATION"
+    exit 1
 fi
 
 # ============================================================================
