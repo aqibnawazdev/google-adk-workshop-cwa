@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-01-23)
 
 **Core value:** Participants learn to build production-ready AI agents with proper context engineering - combining real-time APIs, knowledge bases, and structured data
-**Current focus:** RAG & Knowledge Integration
+**Current focus:** Sessions & Deployment
 
 ## Current Position
 
-Phase: 3 of 5 (RAG & Knowledge Integration)
-Plan: 5 of 6 (03-01, 03-02, 03-03, 03-04, 03-05 complete)
-Status: In progress - Exercise 3 workshop notebook complete
-Last activity: 2026-01-24 - Completed 03-05: Exercise 3 notebook with RAG integration teaching materials (36 cells, Tools vs RAG framework, hybrid pattern)
+Phase: 4 of 5 (Sessions & Deployment)
+Plan: 0 of TBD (phase planning needed)
+Status: Phase 3 complete, ready for Phase 4 planning
+Last activity: 2026-01-24 - Completed Phase 3 (RAG & Knowledge Integration) with 6 plans, verified all must-haves
 
-Progress: [████████░░] 92%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 4.4min
-- Total execution time: 0.86 hours
+- Total plans completed: 13
+- Average duration: 4.5min
+- Total execution time: 0.97 hours
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [████████░░] 92%
 |-------|-------|-------|----------|
 | 1 (Foundation & Setup) | 4 | 12min | 3.0min |
 | 2 (Function Calling & Tools) | 3 | 8min | 2.7min |
-| 3 (RAG & Knowledge Integration) | 5 | 51min | 10.2min |
+| 3 (RAG & Knowledge Integration) | 6 | 56min | 9.3min |
 
 **Recent Trend:**
-- Last 5 plans: 03-05 (7min), 03-03 (4min), 03-04 (10min), 03-01 (16min), 03-02 (14min)
-- Trend: Efficiency improving - automation scripts (03-03: 4min) and notebooks (03-05: 7min) faster than guide content (03-01/02: 14-16min)
+- Last 5 plans: 03-06 (5min), 03-05 (7min), 03-03 (4min), 03-04 (5min), 03-01 (16min)
+- Trend: Excellent velocity - documentation plans (03-06: 5min) and notebooks (03-05: 7min) efficient, Phase 3 complete
 
 *Updated after each plan completion*
 
@@ -93,6 +93,8 @@ Recent decisions affecting current work:
 - 03-05: Progressive exercise structure (explore → configure → create → test → integrate) - matches Exercise 2 format, builds complexity incrementally
 - 03-05: Introduce constraint before solution (3C explains limitation, 3E provides workaround) - builds problem-solving mindset, not rote coding
 - 03-05: Focus TODOs on RAG concepts only - Phase 2 function calling tools provided, reduces cognitive load for new RAG learning
+- 03-06: Tools vs RAG Decision Framework in README - enables participants to make correct architectural choices post-workshop
+- 03-06: Hybrid agent pattern documented with architecture diagram - explains ADK constraint workaround
 
 ### Pending Todos
 
@@ -110,6 +112,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-24T10:32:03Z
-Stopped at: Completed 03-05-PLAN.md (Exercise 3 notebook: RAG integration with 36 cells, Tools vs RAG framework, hybrid agent pattern)
+Last session: 2026-01-24T10:45:00Z
+Stopped at: Completed Phase 3 (RAG & Knowledge Integration) - all 6 plans executed, verified
 Resume file: None

@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Setup** - Environment setup, basic agent, and reference implementation
 - [x] **Phase 2: Function Calling & Tools** - Real-time booking search with flight/hotel APIs
-- [ ] **Phase 3: RAG & Knowledge Integration** - Destination knowledge retrieval and recommendations
+- [x] **Phase 3: RAG & Knowledge Integration** - Destination knowledge retrieval and recommendations
 - [ ] **Phase 4: Sessions & Deployment** - State management, conversation persistence, and Vertex AI deployment
 - [ ] **Phase 5: Workshop Support Materials** - Exercises, solutions, troubleshooting, and validation systems
 
@@ -32,10 +32,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Environment verification notebook (00-setup-verification.ipynb)
-- [ ] 01-02-PLAN.md — Basic hello agent notebook (01-hello-agent.ipynb)
-- [ ] 01-03-PLAN.md — Reference implementation (agent.py, README, .env.template)
-- [ ] 01-04-PLAN.md — Setup documentation (SETUP.md, workshop README.md)
+- [x] 01-01-PLAN.md — Environment verification notebook (00-setup-verification.ipynb)
+- [x] 01-02-PLAN.md — Basic hello agent notebook (01-hello-agent.ipynb)
+- [x] 01-03-PLAN.md — Reference implementation (agent.py, README, .env.template)
+- [x] 01-04-PLAN.md — Setup documentation (SETUP.md, workshop README.md)
 
 ### Phase 2: Function Calling & Tools
 **Goal**: Agent can search real-time booking data using function calling for flights and hotels
@@ -64,10 +64,15 @@ Plans:
   3. Agent infers unstated preferences from conversation context to personalize suggestions
   4. Destination knowledge corpus with 10-15 PDF guides is pre-indexed and searchable
   5. Workshop materials demonstrate static knowledge retrieval pattern and RAG integration
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 03-01: TBD during phase planning
+- [x] 03-01-PLAN.md — Destination guides batch 1 (Tokyo, Paris, NYC, Singapore, London)
+- [x] 03-02-PLAN.md — Destination guides batch 2 (Rome, Bangkok, Sydney, Barcelona, Dubai)
+- [x] 03-03-PLAN.md — Corpus setup scripts (PDF conversion, RAG corpus creation, validation)
+- [x] 03-04-PLAN.md — Reference implementation RAG (rag_tools.py, hybrid_agent.py)
+- [x] 03-05-PLAN.md — Exercise 3 notebook (03-rag-knowledge.ipynb)
+- [x] 03-06-PLAN.md — README update with RAG documentation
 
 ### Phase 4: Sessions & Deployment
 **Goal**: Agent maintains conversation state across turns and deploys to production Vertex AI endpoint
@@ -111,6 +116,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation & Setup | 4/4 | Complete | 2026-01-23 |
 | 2. Function Calling & Tools | 3/3 | Complete | 2026-01-24 |
-| 3. RAG & Knowledge Integration | 0/TBD | Not started | - |
+| 3. RAG & Knowledge Integration | 6/6 | Complete | 2026-01-24 |
 | 4. Sessions & Deployment | 0/TBD | Not started | - |
 | 5. Workshop Support Materials | 0/TBD | Not started | - |
