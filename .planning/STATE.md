@@ -11,8 +11,8 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 
 Phase: 3 of 5 (RAG & Knowledge Integration)
 Plan: 2 of 6 (03-01, 03-02 complete)
-Status: In progress - destination guide corpus complete (10 guides total)
-Last activity: 2026-01-24 - Completed 03-01-PLAN.md (Tokyo, Paris, New York, Singapore, London guides)
+Status: In progress - destination guide corpus complete (10 guides total), critical 00-setup-verification fix applied
+Last activity: 2026-01-24 - Fixed asyncio event loop conflict in 00-setup-verification.ipynb (blocked all participants)
 
 Progress: [████████░░] 85%
 
@@ -80,6 +80,7 @@ Recent decisions affecting current work:
 - 03-02: Table format for attractions with booking details - tests layout-aware chunking (Document AI parser must preserve table structure)
 - 03-02: Cultural sensitivity emphasized - Dubai Islamic customs, Bangkok monarchy respect, Barcelona Catalan identity
 - 03-02: Balanced practical and cultural content - authentic guides serve dual purpose (RAG corpus + educational resource)
+- 00-setup-verification FIX: Top-level await instead of asyncio.run() - Colab/Jupyter has existing event loop, asyncio.run() causes nested loop conflict
 
 ### Pending Todos
 
