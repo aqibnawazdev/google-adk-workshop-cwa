@@ -125,6 +125,204 @@ This "errors-in-context" pattern lets the agent:
 - Suggest how to fix it
 - Offer alternatives
 
+## RAG Knowledge Integration
+
+### Overview
+
+Starting in Exercise 3, you'll add a knowledge base of destination guides using Vertex AI RAG Engine. This gives your agent access to static information like visa requirements, attractions, weather, and cultural tips.
+
+### Why RAG Complements Tools
+
+The key decision: **Does this data change while the user is talking to the agent?**
+
+**Use Tools (Function Calling) when:**
+- Data changes every minute (flight availability, hotel pricing)
+- Requires real-time API calls
+- Need current status or live calculations
+
+**Use RAG (Knowledge Retrieval) when:**
+- Data is static or slow-changing (destination guides, visa policies)
+- Information already exists in documents
+- Need semantic search across large corpus
+
+**Example queries:**
+```
+"Find flights to Tokyo on March 15"           → Tool (search_flights)
+"What's the best time to visit Tokyo?"        → RAG (seasonal guide)
+"Show hotels in Shibuya under $200/night"     → Tool (search_hotels)
+"What are visa requirements for Japan?"       → RAG (policy document)
+"What cultural customs should I know?"        → RAG (destination guide)
+```
+
+### Tools vs RAG Decision Framework
+
+```
+User Query
+    ↓
+Does this need REAL-TIME data?
+(prices, availability, current status)
+    ↓
+   YES → Use FUNCTION CALLING TOOLS
+         (search_flights, search_hotels)
+    ↓
+    NO → Is this STATIC KNOWLEDGE?
+          (guides, policies, cultural info)
+    ↓
+   YES → Use RAG RETRIEVAL
+         (destination_knowledge)
+    ↓
+    NO → General knowledge
+          LLM can answer directly
+```
+
+### Files Added in Exercise 3
+
+```
+reference-implementation/
+├── rag_tools.py          # RAG retrieval tool configuration
+├── hybrid_agent.py       # Combines tools + RAG (workaround pattern)
+└── agent.py             # Updated with RAG integration
+```
+
+### Quick Start with RAG
+
+**1. Set up environment:**
+```bash
+# Add to your .env file
+RAG_CORPUS_ID=projects/{project}/locations/{location}/ragCorpora/{corpus_id}
+```
+
+The corpus ID is provided by your instructor (pre-indexed with 10 destination guides).
+
+**2. Configure RAG tool:**
+```python
+from rag_tools import destination_knowledge
+
+# Pre-configured RAG retrieval tool
+# - Searches destination guide corpus
+# - Returns top 5 most relevant chunks
+# - Filters by similarity threshold (0.6)
+```
+
+**3. Create RAG-only agent:**
+```python
+from google.adk.agents import Agent
+from rag_tools import destination_knowledge
+
+destination_expert = Agent(
+    model='gemini-2.5-flash',
+    name='destination_expert',
+    tools=[destination_knowledge],  # ONLY RAG tool
+)
+```
+
+**Important constraint:** Vertex AI RAG retrieval tool cannot be mixed with function calling tools in the same agent. See hybrid pattern below.
+
+### Hybrid Agent Pattern
+
+To provide both real-time booking AND destination knowledge, use the hybrid coordination pattern:
+
+```python
+from hybrid_agent import HybridTravelAssistant
+
+# Creates two specialized agents:
+# - booking_agent: Has search_flights and search_hotels tools
+# - destination_agent: Has RAG retrieval tool only
+#
+# Coordinator routes queries based on intent:
+# - "Find flights..." → booking agent
+# - "What are visa requirements..." → destination agent
+# - "Find flights to Tokyo..." → booking agent + destination enrichment
+
+assistant = HybridTravelAssistant()
+response = assistant.assist("Find flights to Tokyo and tell me about the culture")
+# Returns: Flight results + Tokyo cultural tips from knowledge base
+```
+
+**Why this pattern?**
+- ADK constraint: RAG tool cannot mix with function calling tools
+- Solution: Separate specialized agents with coordination logic
+- Intent detection routes to appropriate agent
+- Results can be combined for comprehensive answers
+
+**Pattern comparison:**
+
+| Pattern | Capabilities | When to Use |
+|---------|-------------|-------------|
+| Tools-only agent | Real-time search | Phase 2, before RAG |
+| RAG-only agent | Static knowledge | Testing RAG, knowledge-focused queries |
+| Hybrid coordinator | Tools + RAG | Production use, comprehensive assistance |
+
+See `hybrid_agent.py` for full implementation with intent detection, routing logic, and result enrichment.
+
+### RAG Tool Description Pattern
+
+Critical for correct tool selection: use explicit DO/DO NOT sections in RAG tool descriptions.
+
+**Bad (vague):**
+```python
+description='Get information about travel destinations.'
+```
+
+**Good (explicit):**
+```python
+description='''Retrieve destination information from travel guide knowledge base.
+
+USE THIS TOOL to answer questions about:
+- Visa requirements and entry rules
+- Top attractions and landmarks
+- Weather and best time to visit
+- Cultural tips and local customs
+- Safety information
+- Transportation within city
+
+DO NOT use this tool for:
+- Real-time flight or hotel availability → use search_flights/search_hotels
+- Current pricing or booking status → use search tools
+- Live event schedules → real-time data not in guides
+'''
+```
+
+Without DO/DO NOT boundaries, the LLM may call RAG for real-time queries or call tools for static knowledge.
+
+### Environment Variables
+
+```bash
+# Required for RAG integration
+RAG_CORPUS_ID=projects/{project}/locations/{location}/ragCorpora/{corpus_id}
+
+# Optional tuning parameters (defaults shown)
+RAG_SIMILARITY_TOP_K=5          # Number of chunks to retrieve
+RAG_VECTOR_THRESHOLD=0.6        # Minimum similarity score (0.0-1.0)
+```
+
+### Troubleshooting RAG
+
+**Issue: "RAG_CORPUS_ID not set"**
+- Cause: Environment variable missing
+- Fix: Add `RAG_CORPUS_ID=projects/.../ragCorpora/...` to .env file
+- Get corpus ID from instructor or workshop materials
+
+**Issue: "No relevant information found"**
+- Cause: Query doesn't match any destination guides
+- Fix: Check corpus contains guide for that destination
+- Or: Lower `RAG_VECTOR_THRESHOLD` to be more permissive
+
+**Issue: "Retrieved chunks seem irrelevant"**
+- Cause: Similarity threshold too low
+- Fix: Increase `RAG_VECTOR_THRESHOLD` (try 0.7 or 0.8)
+- Or: Reduce `RAG_SIMILARITY_TOP_K` to return fewer chunks
+
+**Issue: "Agent calls RAG for real-time queries"**
+- Cause: Vague RAG tool description
+- Fix: Add explicit DO/DO NOT sections (see pattern above)
+- Ensure tool description clearly states "static guides, not live data"
+
+**Issue: "Cannot mix RAG with function calling tools"**
+- Cause: Tried to add destination_knowledge to tools list with search_flights/search_hotels
+- Fix: Use hybrid pattern (see `hybrid_agent.py`)
+- Create separate agents: one for tools, one for RAG
+
 ## Quick Start
 
 ### In Google Colab (Recommended)
@@ -143,10 +341,12 @@ This "errors-in-context" pattern lets the agent:
 
 ```
 reference-implementation/
-├── agent.py      # Agent definition and configuration
-├── tools.py      # Tool function implementations
-├── README.md     # This file
-└── .env.template # Environment configuration
+├── agent.py          # Agent definition and configuration
+├── tools.py          # Tool function implementations (flights, hotels)
+├── rag_tools.py      # RAG retrieval tool configuration (Exercise 3)
+├── hybrid_agent.py   # Hybrid coordinator pattern (Exercise 3)
+├── README.md         # This file
+└── .env.template     # Environment configuration
 ```
 
 ## Workshop Progression
