@@ -11,8 +11,8 @@ See: .planning/PROJECT.md (updated 2026-01-23)
 
 Phase: 3 of 5 (RAG & Knowledge Integration)
 Plan: 2 of 6 (03-01, 03-02 complete)
-Status: In progress - destination guide corpus complete (10 guides total), switched to Google AI API key approach for simpler workshop experience
-Last activity: 2026-01-24 - Switched from Vertex AI to Google AI API key approach - removed all vertexai.init() calls, uses GOOGLE_API_KEY env var
+Status: In progress - destination guide corpus complete (10 guides total), all notebook blocking issues resolved
+Last activity: 2026-01-24 - Fixed ADK API pattern: use Runner + genai.configure() (not agent.generate_content which doesn't exist)
 
 Progress: [████████░░] 85%
 
@@ -82,6 +82,7 @@ Recent decisions affecting current work:
 - 03-02: Balanced practical and cultural content - authentic guides serve dual purpose (RAG corpus + educational resource)
 - ASYNC FIX: Top-level await instead of asyncio.run() - Colab/Jupyter has existing event loop, asyncio.run() causes nested loop conflict
 - **AUTH DECISION: Switched from Vertex AI to Google AI API key approach** - Simpler participant experience (just get API key from aistudio.google.com/apikey), no GCP project config needed, eliminates vertexai.init() complexity. Vertex AI remains available for deployment topics if covered later.
+- **ADK API PATTERN: Use Runner + InMemorySessionService pattern (not agent.generate_content)** - Based on official docs and ADK_Learning_tools.ipynb example. The correct pattern is: genai.configure(api_key), Runner with InMemorySessionService, runner.run_async() with async for loop, event.is_final_response() to extract response. agent.generate_content() does not exist in ADK.
 
 ### Pending Todos
 
