@@ -9,7 +9,11 @@ Or in Colab: import this module and call create_agent()
 """
 
 import os
+import asyncio
 from google.adk.agents import Agent
+from google.adk.runners import Runner
+from google.adk.sessions import InMemorySessionService
+from google.genai.types import Content, Part
 from tools import search_flights, search_hotels
 
 # ============================================================
@@ -135,16 +139,58 @@ If you can't find what they need, suggest alternatives or ask clarifying questio
 # MAIN ENTRY POINT
 # ============================================================
 
-if __name__ == '__main__':
-    # Create and test the agent
+async def test_agent():
+    """
+    Test the agent using the proper Runner + Sessions pattern.
+
+    This demonstrates the CORRECT way to use ADK agents:
+    1. Create a session service
+    2. Create a session for the conversation
+    3. Create a runner
+    4. Run queries with async event handling
+    """
+    # Create agent
     agent = create_agent()
 
-    # Simple test
     print("Travel Booking Assistant initialized!")
     print("Testing with a sample query...\n")
 
-    response = agent.generate_content(
-        "I want to plan a trip to Tokyo in March. "
-        "Can you help me find flights from San Francisco?"
+    # Create session service and session
+    session_service = InMemorySessionService()
+    session = await session_service.create_session(
+        app_name=agent.name,
+        user_id='test_user'
     )
-    print(response.text)
+
+    # Create runner
+    runner = Runner(
+        agent=agent,
+        session_service=session_service,
+        app_name=agent.name
+    )
+
+    # Run query
+    query = "I want to plan a trip to Tokyo in March. Can you help me find flights from San Francisco?"
+    print(f"Query: {query}\n")
+
+    final_response = ""
+    async for event in runner.run_async(
+        user_id='test_user',
+        session_id=session.id,
+        new_message=Content(parts=[Part(text=query)], role="user")
+    ):
+        # Show when tools are called
+        if hasattr(event.content, 'parts'):
+            for part in event.content.parts:
+                if hasattr(part, 'function_call') and part.function_call:
+                    print(f"🔧 Tool called: {part.function_call.name}")
+
+        if event.is_final_response():
+            final_response = event.content.parts[0].text
+            break
+
+    print(f"\nResponse:\n{final_response}")
+
+if __name__ == '__main__':
+    # Run the test with proper async pattern
+    asyncio.run(test_agent())
