@@ -131,15 +131,7 @@ This "errors-in-context" pattern lets the agent:
 
 1. Upload this folder to Colab or clone from workshop repo
 2. Run the setup cell (authentication + install)
-3. Import and test:
-
-```python
-from agent import create_agent
-
-agent = create_agent()
-response = agent.generate_content("Plan a trip to Japan for me")
-print(response.text)
-```
+3. Use the workshop notebooks (01-hello-agent.ipynb, 02-tools-functions.ipynb) which have the proper async Runner pattern for testing agents
 
 ### Locally
 
@@ -168,11 +160,13 @@ reference-implementation/
 
 ## Testing
 
-Quick test to verify the agent works:
+Quick test to verify the agent can be created:
 
 ```bash
-python -c "from agent import create_agent; a = create_agent(); print(a.generate_content('Hello').text)"
+python -c "from agent import create_agent; a = create_agent(); print(f'Agent created: {a.name}')"
 ```
+
+For full agent testing with conversations, use the workshop notebooks which have the proper async Runner pattern.
 
 ## Need Help?
 

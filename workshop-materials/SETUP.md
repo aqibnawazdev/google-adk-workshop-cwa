@@ -132,10 +132,12 @@ agent = Agent(
     description='Test agent',
     instruction='Say hello'
 )
-print(agent.generate_content('Hello').text[:100])
+print(f'✓ Agent created: {agent.name}')
 print('✓ Local environment ready!')
 "
 ```
+
+> **Note:** To fully test agent responses, use the workshop notebooks which have the proper async Runner pattern for Colab/Jupyter environments.
 
 ---
 
