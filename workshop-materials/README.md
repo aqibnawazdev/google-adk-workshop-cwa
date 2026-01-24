@@ -26,6 +26,17 @@ Build a production-ready AI agent that can search flights, find hotels, and prov
 | [03-rag-knowledge.ipynb](./03-rag-knowledge.ipynb) | Exercise 3: Integrate knowledge base | 20 min |
 | [04-sessions-memory.ipynb](./04-sessions-memory.ipynb) | Exercise 4: Add session memory | 20 min |
 
+### Falling Behind?
+
+If you need to catch up during the workshop, use our checkpoint branches:
+
+```bash
+# Jump to Exercise 2 starting point (with Exercise 1 complete)
+git checkout checkpoint/exercise-2
+```
+
+See [CHECKPOINTS.md](./CHECKPOINTS.md) for full catch-up instructions and troubleshooting.
+
 ### Reference Implementation
 
 See the complete working agent in [reference-implementation/](./reference-implementation/):
