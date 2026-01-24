@@ -52,6 +52,8 @@ This agent demonstrates the key decision: **when to use function calling vs know
 - **YES** -> Use a Tool (function calling)
 - **NO** -> Use RAG (knowledge retrieval)
 
+For a comprehensive decision framework with flowcharts and common mistakes, see [Context Engineering Guide](../CONTEXT-ENGINEERING.md).
+
 ## Available Tools
 
 ### search_flights
