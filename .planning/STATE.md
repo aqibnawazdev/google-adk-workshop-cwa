@@ -84,6 +84,7 @@ Recent decisions affecting current work:
 - 01-hello-agent FIX: Top-level await in Cells 7, 11 - same asyncio.run() issue blocked Exercise 1
 - 02-tools-functions FIX: Top-level await in Cells 21, 27 - same asyncio.run() issue blocked Exercise 2
 - ALL NOTEBOOKS FIX: Added vertexai.init() before Agent creation - ADK defaults to Google AI API without it, requires api_key parameter instead of using Vertex AI with GCP auth
+- 00-setup-verification FIX v2: Moved vertexai.init() to CELL LEVEL (not inside try block) - must initialize BEFORE Agent() constructor is called
 
 ### Pending Todos
 
