@@ -202,11 +202,11 @@ echo "   ✓ Uploaded $PDF_COUNT PDF files to gs://$BUCKET_NAME/guides/"
 echo ""
 echo "[5/7] Creating RAG corpus..."
 
-# Create corpus via REST API
+# Create corpus via REST API (using v1beta1 for latest features)
 CORPUS_RESPONSE=$(curl -s -X POST \
   -H "Authorization: Bearer $(gcloud auth print-access-token)" \
   -H "Content-Type: application/json" \
-  "https://${LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/ragCorpora" \
+  "https://${LOCATION}-aiplatform.googleapis.com/v1beta1/projects/${PROJECT_ID}/locations/${LOCATION}/ragCorpora" \
   -d '{
     "display_name": "'"$CORPUS_NAME"'",
     "description": "Destination travel guides for ADK workshop exercises. Contains comprehensive guides for Tokyo, Paris, New York, Singapore, London, Rome, Bangkok, Sydney, Barcelona, Dubai covering visa requirements, attractions, weather, cultural tips, and practical information."
@@ -240,24 +240,26 @@ echo "   Full path: $FULL_CORPUS_ID"
 
 echo ""
 echo "[6/7] Importing PDFs to corpus..."
-echo "   (This takes 5-10 minutes - indexing with Document AI layout parser)"
+echo "   (This takes 5-10 minutes - indexing and embedding)"
 
-# Import PDFs with layout parsing enabled
+# Import PDFs with chunking configuration
+# Note: Using v1beta1 API for latest features
 IMPORT_RESPONSE=$(curl -s -X POST \
   -H "Authorization: Bearer $(gcloud auth print-access-token)" \
   -H "Content-Type: application/json" \
-  "https://${LOCATION}-aiplatform.googleapis.com/v1/${FULL_CORPUS_ID}/ragFiles:import" \
+  "https://${LOCATION}-aiplatform.googleapis.com/v1beta1/${FULL_CORPUS_ID}/ragFiles:import" \
   -d '{
     "import_rag_files_config": {
       "gcs_source": {
         "uris": ["gs://'"$BUCKET_NAME"'/guides/*.pdf"]
       },
-      "rag_file_chunking_config": {
-        "chunk_size": 1024,
-        "chunk_overlap": 256
-      },
-      "rag_file_parsing_config": {
-        "use_advanced_pdf_parsing": true
+      "rag_file_transformation_config": {
+        "rag_file_chunking_config": {
+          "fixed_length_chunking": {
+            "chunk_size": 1024,
+            "chunk_overlap": 256
+          }
+        }
       },
       "max_embedding_requests_per_min": 1000
     }
@@ -273,7 +275,7 @@ fi
 echo "   ✓ Import request submitted"
 echo "   Chunk size: 1024 tokens"
 echo "   Chunk overlap: 256 tokens"
-echo "   Layout parsing: enabled (Document AI)"
+echo "   Chunking: fixed length"
 
 # ============================================================================
 # STEP 7: SAVE CORPUS ID AND DISPLAY COMPLETION INFO
