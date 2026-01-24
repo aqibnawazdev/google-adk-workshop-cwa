@@ -10,6 +10,7 @@ Or in Colab: import this module and call create_agent()
 
 import os
 from google.adk.agents import Agent
+from tools import search_flights, search_hotels
 
 # ============================================================
 # CONFIGURATION (Exercise 1: Setup)
@@ -23,62 +24,14 @@ MODEL = 'gemini-2.5-flash'
 # TOOL FUNCTIONS (Exercise 2: Function Calling)
 # ============================================================
 
-# These functions let the agent search for real-time travel data.
-# You'll implement these in Exercise 2.
-
-def search_flights(origin: str, destination: str, departure_date: str,
-                   passengers: int = 1) -> dict:
-    """
-    Search for available flights.
-
-    Args:
-        origin: Departure airport code (e.g., 'SFO')
-        destination: Arrival airport code (e.g., 'NRT')
-        departure_date: Date in YYYY-MM-DD format
-        passengers: Number of passengers (default 1)
-
-    Returns:
-        Dict with available flights and prices
-    """
-    # TODO (Exercise 2): Implement with mock data or real API
-    # For now, return sample data
-    return {
-        'flights': [
-            {'airline': 'United', 'price': 850, 'departure': '08:30', 'arrival': '14:30+1'},
-            {'airline': 'ANA', 'price': 920, 'departure': '11:00', 'arrival': '17:00+1'},
-            {'airline': 'JAL', 'price': 890, 'departure': '13:45', 'arrival': '19:45+1'},
-        ],
-        'currency': 'USD',
-        'route': f'{origin} → {destination}',
-        'date': departure_date,
-    }
-
-
-def search_hotels(location: str, check_in: str, check_out: str,
-                  guests: int = 1) -> dict:
-    """
-    Search for available hotels.
-
-    Args:
-        location: City or area name (e.g., 'Tokyo, Japan')
-        check_in: Check-in date in YYYY-MM-DD format
-        check_out: Check-out date in YYYY-MM-DD format
-        guests: Number of guests (default 1)
-
-    Returns:
-        Dict with available hotels and rates
-    """
-    # TODO (Exercise 2): Implement with mock data or real API
-    return {
-        'hotels': [
-            {'name': 'Park Hyatt Tokyo', 'stars': 5, 'price_per_night': 450, 'rating': 4.8},
-            {'name': 'Shinjuku Granbell', 'stars': 4, 'price_per_night': 180, 'rating': 4.5},
-            {'name': 'MUJI Hotel Ginza', 'stars': 4, 'price_per_night': 220, 'rating': 4.6},
-        ],
-        'location': location,
-        'dates': f'{check_in} to {check_out}',
-        'currency': 'USD',
-    }
+# Tool functions are now imported from tools.py (see import at top).
+# The tools.py file contains complete implementations with:
+# - Full validation and error handling
+# - Budget filtering (max_price parameters)
+# - Realistic mock data
+# - Error-in-context pattern (returns error dicts, doesn't raise exceptions)
+#
+# You'll implement these patterns in Exercise 2.
 
 
 # ============================================================
@@ -149,6 +102,12 @@ HOW TO HELP:
    - If they mention budget once, apply it to all searches
    - Note dietary restrictions for restaurant suggestions
    - Track their preferred travel style (luxury, budget, adventure)
+
+BUDGET AWARENESS:
+- If user mentions a budget, use max_price parameter for flights and max_price_per_night for hotels
+- When options are excluded due to budget constraints, explain this clearly
+- If nothing fits their budget, suggest the lowest available price or alternative options
+- Be proactive about budget - if they say "under $800", filter aggressively
 
 TONE:
 - Friendly and enthusiastic about travel
