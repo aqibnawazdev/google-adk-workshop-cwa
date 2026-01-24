@@ -13,7 +13,7 @@ This roadmap delivers a complete 90-minute hands-on workshop teaching AI agent d
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Setup** - Environment setup, basic agent, and reference implementation
-- [ ] **Phase 2: Function Calling & Tools** - Real-time booking search with flight/hotel APIs
+- [x] **Phase 2: Function Calling & Tools** - Real-time booking search with flight/hotel APIs
 - [ ] **Phase 3: RAG & Knowledge Integration** - Destination knowledge retrieval and recommendations
 - [ ] **Phase 4: Sessions & Deployment** - State management, conversation persistence, and Vertex AI deployment
 - [ ] **Phase 5: Workshop Support Materials** - Exercises, solutions, troubleshooting, and validation systems
@@ -50,9 +50,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Function calling exercise notebook (02-tools-functions.ipynb)
-- [ ] 02-02-PLAN.md — Reference implementation tools (tools.py with search_flights, search_hotels)
-- [ ] 02-03-PLAN.md — Reference implementation README update (decision framework, tool docs)
+- [x] 02-01-PLAN.md — Function calling exercise notebook (02-tools-functions.ipynb)
+- [x] 02-02-PLAN.md — Reference implementation tools (tools.py with search_flights, search_hotels)
+- [x] 02-03-PLAN.md — Reference implementation README update (decision framework, tool docs)
 
 ### Phase 3: RAG & Knowledge Integration
 **Goal**: Agent retrieves destination information from knowledge base and provides smart recommendations
@@ -110,7 +110,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Setup | 4/4 | Complete | 2026-01-23 |
-| 2. Function Calling & Tools | 0/3 | In progress | - |
+| 2. Function Calling & Tools | 3/3 | Complete | 2026-01-24 |
 | 3. RAG & Knowledge Integration | 0/TBD | Not started | - |
 | 4. Sessions & Deployment | 0/TBD | Not started | - |
 | 5. Workshop Support Materials | 0/TBD | Not started | - |
