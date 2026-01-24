@@ -106,10 +106,15 @@ Plans:
   5. Pre-workshop validation system verifies participant environment 48 hours ahead with confirmation required
   6. Participant can use git branch checkpoints to jump to any exercise for catch-up
   7. Production readiness checklist helps participants evaluate agent quality beyond workshop scope
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 05-01: TBD during phase planning
+- [ ] 05-01-PLAN.md — Centralized troubleshooting guide (TROUBLESHOOTING.md)
+- [ ] 05-02-PLAN.md — Context engineering decision framework (CONTEXT-ENGINEERING.md)
+- [ ] 05-03-PLAN.md — Production readiness checklist (PRODUCTION-READINESS.md)
+- [ ] 05-04-PLAN.md — Git checkpoint branches and documentation (create-checkpoints.sh, CHECKPOINTS.md)
+- [ ] 05-05-PLAN.md — Pre-validation confirmation mechanism (00-setup-verification.ipynb updates)
+- [ ] 05-06-PLAN.md — Solutions audit and enhancement (all exercise notebooks)
 
 ## Progress
 
@@ -122,4 +127,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Function Calling & Tools | 3/3 | Complete | 2026-01-24 |
 | 3. RAG & Knowledge Integration | 6/6 | Complete | 2026-01-24 |
 | 4. Sessions & Deployment | 5/5 | Complete | 2026-01-24 |
-| 5. Workshop Support Materials | 0/TBD | Not started | - |
+| 5. Workshop Support Materials | 0/6 | Not started | - |
